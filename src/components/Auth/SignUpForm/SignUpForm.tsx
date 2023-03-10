@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Form, Button } from "semantic-ui-react";
+import IconPopup from "../../IconPopup";
 import { newUser } from "../../../types/auth";
 import "./SignUpForm.scss";
-
 
 const SignUpForm = () => {
   const initialValues: newUser = {
@@ -15,7 +16,21 @@ const SignUpForm = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: null,
+    validationSchema: Yup.object({
+      name: Yup.string().required("Your name is required"),
+      username: Yup.string()
+        .matches(/^[a-zA-Z0-9-]*$/, "The username cannot contain spaces")
+        .required("Username is required"),
+      email: Yup.string()
+        .email("This email is not valid")
+        .required("Email is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .oneOf([Yup.ref("repeatpassword")], "Passwords are not equal"),
+      repeatpassword: Yup.string()
+        .required("Password is required")
+        .oneOf([Yup.ref("password")], "Passwords are not equal"),
+    }),
     onSubmit: (values) => {
       console.log(values);
     },
@@ -34,6 +49,12 @@ const SignUpForm = () => {
           autoComplete="name"
           value={formik.values.name}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.name && !!formik.errors.name}
+          icon={
+            formik.touched.name &&
+            !!formik.errors.name && <IconPopup message={formik.errors.name} />
+          }
         />
         <Form.Input
           type="text"
@@ -42,6 +63,14 @@ const SignUpForm = () => {
           autoComplete="username"
           value={formik.values.username}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.username && !!formik.errors.username}
+          icon={
+            formik.touched.username &&
+            !!formik.errors.username && (
+              <IconPopup message={formik.errors.username} />
+            )
+          }
         />
         <Form.Input
           type="text"
@@ -50,6 +79,12 @@ const SignUpForm = () => {
           autoComplete="email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && !!formik.errors.email}
+          icon={
+            formik.touched.email &&
+            !!formik.errors.email && <IconPopup message={formik.errors.email} />
+          }
         />
         <Form.Input
           type="password"
@@ -58,6 +93,14 @@ const SignUpForm = () => {
           autoComplete="new-password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && !!formik.errors.password}
+          icon={
+            formik.touched.password &&
+            !!formik.errors.password && (
+              <IconPopup message={formik.errors.password} />
+            )
+          }
         />
         <Form.Input
           type="password"
@@ -66,6 +109,16 @@ const SignUpForm = () => {
           autoComplete="new-password"
           value={formik.values.repeatpassword}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.repeatpassword && !!formik.errors.repeatpassword
+          }
+          icon={
+            formik.touched.repeatpassword &&
+            !!formik.errors.repeatpassword && (
+              <IconPopup message={formik.errors.repeatpassword} />
+            )
+          }
         />
         <Button type="submit" className="btn-submit">
           Sign up
