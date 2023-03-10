@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ApolloProvider } from "@apollo/client";
-import { Button } from "semantic-ui-react";
 import client from "./config/apollo";
 import Auth from "./pages/Auth";
 
