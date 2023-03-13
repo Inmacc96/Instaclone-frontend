@@ -1,11 +1,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Form, Button } from "semantic-ui-react";
+import { useMutation } from "@apollo/client";
 import IconPopup from "../../IconPopup";
 import { newUser } from "../../../types/auth";
+import { SIGNUP_USER } from "../../../gql/user";
 import "./SignUpForm.scss";
 
 const SignUpForm = () => {
+  const [newUser] = useMutation(SIGNUP_USER);
+
   const initialValues: newUser = {
     name: "",
     username: "",
@@ -31,8 +35,18 @@ const SignUpForm = () => {
         .required("Password is required")
         .oneOf([Yup.ref("password")], "Passwords are not equal"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const { name, username, email, password } = values;
+      try {
+        const { data } = await newUser({
+          variables: {
+            input: { name, username, email, password },
+          },
+        });
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
