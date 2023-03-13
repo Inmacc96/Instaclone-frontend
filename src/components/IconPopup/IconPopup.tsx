@@ -8,7 +8,7 @@ type CustomIconProps = {
 
 const IconPopup = ({ message }: CustomIconProps) => {
   const [isOpenPopUp, setIsOpenPopUp] = useState(true);
-  const popupTimeoutRef = useRef<number>();
+  const popupTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     popupTimeoutRef.current = setTimeout(() => {
