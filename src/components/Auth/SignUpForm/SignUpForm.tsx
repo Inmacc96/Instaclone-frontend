@@ -1,13 +1,18 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Form, Button } from "semantic-ui-react";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
 import IconPopup from "../../IconPopup";
 import { newUser } from "../../../types/auth";
 import { SIGNUP_USER } from "../../../gql/user";
 import "./SignUpForm.scss";
 
-const SignUpForm = () => {
+type SignUpProp = {
+  handleShowLogin: (isShow: boolean) => void;
+};
+
+const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
   const [newUser] = useMutation(SIGNUP_USER);
 
   const initialValues: newUser = {
@@ -38,14 +43,16 @@ const SignUpForm = () => {
     onSubmit: async (values) => {
       const { name, username, email, password } = values;
       try {
-        const { data } = await newUser({
+        await newUser({
           variables: {
             input: { name, username, email, password },
           },
         });
-        console.log(data);
-      } catch (err) {
-        console.log(err);
+        toast.success("Successfully registered user");
+        handleShowLogin(true);
+      } catch (error) {
+        const err = error as ApolloError;
+        toast.error(err.message);
       }
     },
   });
