@@ -1,11 +1,12 @@
 import { Container, Image } from "semantic-ui-react";
 import SignUpForm from "../../components/Auth/SignUpForm";
+import LoginForm from "../../components/Auth/LoginForm";
 import instaclone from "../../assets/png/instaclone.png";
 import "./Auth.scss";
 import { useState } from "react";
 
 const Auth = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
 
   const handleShowLogin = (isShow: boolean) => {
     setShowLogin(isShow);
@@ -17,7 +18,7 @@ const Auth = () => {
 
       <div className="container-form">
         {showLogin ? (
-          <p>Login form</p>
+          <LoginForm />
         ) : (
           <SignUpForm handleShowLogin={handleShowLogin} />
         )}
