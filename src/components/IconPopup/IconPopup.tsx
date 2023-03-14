@@ -11,15 +11,16 @@ const IconPopup = ({ message }: CustomIconProps) => {
   const popupTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
+    setIsOpenPopUp(true);
+
+    if (popupTimeoutRef.current) {
+      clearTimeout(popupTimeoutRef.current);
+    }
+
     popupTimeoutRef.current = setTimeout(() => {
       setIsOpenPopUp(false);
     }, 3000);
-
-    return () => {
-      clearTimeout(popupTimeoutRef.current);
-      popupTimeoutRef.current = undefined;
-    };
-  }, []);
+  }, [message]);
 
   const handleMouseEnter = () => {
     setIsOpenPopUp(true);
