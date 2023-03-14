@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Icon } from "semantic-ui-react";
 import { ApolloError, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import IconPopup from "../../IconPopup";
@@ -14,6 +15,8 @@ type SignUpProp = {
 
 const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
   const [newUser] = useMutation(SIGNUP_USER);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const initialValues: newUser = {
     name: "",
@@ -56,6 +59,13 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
       }
     },
   });
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleShowRepeatPassword = () => {
+    setShowRepeatPassword(!showRepeatPassword);
+  };
 
   return (
     <>
@@ -108,7 +118,7 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
           }
         />
         <Form.Input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
           autoComplete="new-password"
@@ -117,14 +127,21 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
           onBlur={formik.handleBlur}
           error={formik.touched.password && !!formik.errors.password}
           icon={
-            formik.touched.password &&
-            !!formik.errors.password && (
-              <IconPopup message={formik.errors.password} />
-            )
+            <div className="container-icon-password">
+              {formik.touched.password && !!formik.errors.password && (
+                <IconPopup message={formik.errors.password} />
+              )}
+              <Icon
+                aria-label="Toggle password visibility"
+                name={showPassword ? "eye slash" : "eye"}
+                link
+                onClick={toggleShowPassword}
+              />
+            </div>
           }
         />
         <Form.Input
-          type="password"
+          type={showRepeatPassword ? "text" : "password"}
           name="repeatpassword"
           placeholder="Repeat Password"
           autoComplete="new-password"
@@ -135,10 +152,18 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
             formik.touched.repeatpassword && !!formik.errors.repeatpassword
           }
           icon={
-            formik.touched.repeatpassword &&
-            !!formik.errors.repeatpassword && (
-              <IconPopup message={formik.errors.repeatpassword} />
-            )
+            <div className="container-icon-password">
+              {formik.touched.repeatpassword &&
+                !!formik.errors.repeatpassword && (
+                  <IconPopup message={formik.errors.repeatpassword} />
+                )}
+              <Icon
+                aria-label="Toggle password visibility"
+                name={showRepeatPassword ? "eye slash" : "eye"}
+                link
+                onClick={toggleShowRepeatPassword}
+              />
+            </div>
           }
         />
         <Button type="submit" className="btn-submit">

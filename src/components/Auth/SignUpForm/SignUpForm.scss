@@ -12,4 +12,15 @@
     padding: 13px 15px;
     background-color: #f9f9f9;
   }
+
+  .container-icon-password {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+  }
 }
