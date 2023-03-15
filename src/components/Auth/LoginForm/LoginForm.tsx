@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import { Button, Form, Icon } from "semantic-ui-react";
+import { useMutation, ApolloError } from "@apollo/client";
+import { AUTH_USER } from "../../../gql/user";
 import IconPopup from "../../IconPopup";
 import { AuthInput } from "../../../__generated__/graphql";
 import "./LoginForm.scss";
-import { useState } from "react";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [authUser] = useMutation(AUTH_USER);
 
   const initialValues: AuthInput = {
     email: "",
@@ -22,8 +26,18 @@ const LoginForm = () => {
         .required("Email is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const { data } = await authUser({
+          variables: {
+            input: values,
+          },
+        });
+        console.log(data);
+      } catch (err) {
+        const error = err as ApolloError;
+        toast.error(error.message);
+      }
     },
   });
 

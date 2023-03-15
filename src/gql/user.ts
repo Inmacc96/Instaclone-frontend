@@ -11,3 +11,11 @@ export const SIGNUP_USER = gql(`#graphql
     }
   }
 `);
+
+export const AUTH_USER = gql(`#graphql
+  mutation authUser($input: AuthInput!) {
+    authUser(input: $input) {
+      token
+    }
+  }
+`);
