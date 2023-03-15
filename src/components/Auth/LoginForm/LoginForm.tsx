@@ -3,10 +3,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Button, Form, Icon } from "semantic-ui-react";
-import { useMutation, ApolloError } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { AUTH_USER } from "../../../gql/user";
 import IconPopup from "../../IconPopup";
 import { AuthInput } from "../../../__generated__/graphql";
+import { setToken } from "../../../utils/token";
 import "./LoginForm.scss";
 
 const LoginForm = () => {
@@ -33,9 +34,15 @@ const LoginForm = () => {
             input: values,
           },
         });
-        console.log(data);
+
+        if (data?.authUser?.token) {
+          const token = data.authUser.token;
+          setToken(token);
+        } else {
+          throw new Error("Mutation did not return a valid token");
+        }
       } catch (err) {
-        const error = err as ApolloError;
+        const error = err as Error;
         toast.error(error.message);
       }
     },
