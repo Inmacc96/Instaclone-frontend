@@ -7,12 +7,15 @@ import { useMutation } from "@apollo/client";
 import { AUTH_USER } from "../../../gql/user";
 import IconPopup from "../../IconPopup";
 import { AuthInput } from "../../../__generated__/graphql";
-import { setToken } from "../../../utils/token";
+import { decodeToken, setToken } from "../../../utils/token";
+import useAuth from "../../../hooks/useAuth";
 import "./LoginForm.scss";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [authUser] = useMutation(AUTH_USER);
+
+  const { setUser } = useAuth();
 
   const initialValues: AuthInput = {
     email: "",
@@ -38,6 +41,7 @@ const LoginForm = () => {
         if (data?.authUser?.token) {
           const token = data.authUser.token;
           setToken(token);
+          setUser(decodeToken(token));
         } else {
           throw new Error("Mutation did not return a valid token");
         }
