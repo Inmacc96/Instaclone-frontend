@@ -5,7 +5,7 @@ import { Form, Button, Icon } from "semantic-ui-react";
 import { ApolloError, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import IconPopup from "../../IconPopup";
-import { newUser } from "../../../types/auth";
+import { NewUser } from "../../../types/auth";
 import { SIGNUP_USER } from "../../../gql/user";
 import "./SignUpForm.scss";
 
@@ -18,7 +18,7 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
-  const initialValues: newUser = {
+  const initialValues: NewUser = {
     name: "",
     username: "",
     email: "",
