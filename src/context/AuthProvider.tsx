@@ -20,7 +20,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  const setUser = (user: DecodedToken) => {
+  const setUser = (user: DecodedToken | null) => {
     setAuth(user);
   };
 

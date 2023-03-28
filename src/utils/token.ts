@@ -11,9 +11,16 @@ export const getToken = () => {
   return localStorage.getItem(TOKEN);
 };
 
-export const decodeToken = (token: string): DecodedToken => {
-  const { id, email, name, username } = jwtDecode<DecodedToken & JwtPayload>(
-    token
-  );
-  return { id, email, name, username };
+export const decodeToken = (token?: string): DecodedToken | null => {
+  try {
+    if (token) {
+      const { id, email, name, username } = jwtDecode<
+        DecodedToken & JwtPayload
+      >(token);
+      return { id, email, name, username };
+    }
+    return null
+  } catch (err) {
+    return null
+  }
 };
