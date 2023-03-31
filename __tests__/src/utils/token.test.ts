@@ -1,6 +1,6 @@
 import { it, describe, expect, vi, beforeEach } from "vitest";
 import jwt from "jsonwebtoken";
-import { decodeToken, setToken } from "../../../src/utils/token";
+import { decodeToken, setToken, getToken } from "../../../src/utils/token";
 import { TOKEN } from "../../../src/utils/constants";
 
 const decodedToken = {
@@ -66,5 +66,49 @@ describe("setToken()", () => {
     setToken(token);
 
     expect(window.localStorage.getItem(TOKEN)).toEqual(token);
+  });
+});
+
+describe("getToken()", () => {
+  beforeEach(() => {
+    window.localStorage.removeItem(TOKEN);
+  });
+
+  it("should call localStorage.getItem with the TOKEN constants", () => {
+    const getItemSpy = vi.spyOn(window.localStorage, "getItem");
+
+    getToken();
+
+    expect(getItemSpy).toHaveBeenCalledTimes(1);
+    expect(getItemSpy).toBeCalledWith(TOKEN);
+
+    getItemSpy.mockRestore();
+  });
+
+  it("should return the token value from localStorage", () => {
+    const token = jwt.sign(decodedToken, "secret");
+    window.localStorage.setItem(TOKEN, token);
+
+    expect(getToken()).toEqual(token);
+  });
+
+  it("should return null if there isn't token in localStorage", () => {
+    expect(getToken()).toBeNull();
+  });
+
+  it("should return a token with special characters from localStorage", () => {
+    const token = "t0k3n.3sp3c1al#";
+    localStorage.setItem(TOKEN, token);
+
+    expect(getToken()).toEqual(token);
+  });
+
+  it("should not modify the value of the token in localStorage", () => {
+    const token = jwt.sign(decodedToken, "secret");
+    window.localStorage.setItem(TOKEN, token);
+
+    getToken();
+
+    expect(window.localStorage.getItem(TOKEN)).toBe(token);
   });
 });
