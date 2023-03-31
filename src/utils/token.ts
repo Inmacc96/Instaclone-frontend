@@ -12,15 +12,16 @@ export const getToken = () => {
 };
 
 export const decodeToken = (token?: string): DecodedToken | null => {
+  if (!token) {
+    return null;
+  }
+
   try {
-    if (token) {
-      const { id, email, name, username } = jwtDecode<
-        DecodedToken & JwtPayload
-      >(token);
-      return { id, email, name, username };
-    }
-    return null
+    const { id, email, name, username } = jwtDecode<DecodedToken & JwtPayload>(
+      token
+    );
+    return { id, email, name, username };
   } catch (err) {
-    return null
+    return null;
   }
 };
