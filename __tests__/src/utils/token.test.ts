@@ -26,6 +26,15 @@ describe("decodeToken()", () => {
     expect(decodeToken("")).toEqual(null);
     expect(decodeToken()).toEqual(null);
   });
+
+  it("should return fields id, email, name and username when token input is valid", () => {
+    const result = decodeToken(token);
+
+    expect(result).toHaveProperty("id");
+    expect(result).toHaveProperty("email");
+    expect(result).toHaveProperty("name");
+    expect(result).toHaveProperty("username");
+  });
 });
 
 describe("setToken()", () => {
