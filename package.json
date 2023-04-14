@@ -29,6 +29,7 @@
     "@graphql-codegen/cli": "^3.2.2",
     "@graphql-codegen/client-preset": "^2.1.1",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
