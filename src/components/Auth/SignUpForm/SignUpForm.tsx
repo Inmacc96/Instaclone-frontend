@@ -72,7 +72,11 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
       <h2 className="signup-form-title">
         Sign up to see photos and videos of your friends
       </h2>
-      <Form className="signup-form" onSubmit={formik.handleSubmit}>
+      <Form
+        data-testid="signup-form"
+        className="signup-form"
+        onSubmit={formik.handleSubmit}
+      >
         <Form.Input
           type="text"
           name="name"
@@ -132,6 +136,7 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
                 <IconPopup message={formik.errors.password} />
               )}
               <Icon
+                data-testid="eye-icon-password"
                 aria-label="Toggle password visibility"
                 name={showPassword ? "eye slash" : "eye"}
                 link
