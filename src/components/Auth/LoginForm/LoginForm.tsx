@@ -55,12 +55,18 @@ const LoginForm = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <>
       <h2 className="login-form-title">
         Log in to see photos and videos of your friends
       </h2>
-      <Form className="login-form" onSubmit={formik.handleSubmit}>
+
+      <Form
+        data-testid="login-form"
+        className="login-form"
+        onSubmit={formik.handleSubmit}
+      >
         <Form.Input
           type="text"
           name="email"
@@ -90,6 +96,7 @@ const LoginForm = () => {
                 <IconPopup message={formik.errors.password} />
               )}
               <Icon
+                data-testid="eye-icon-password"
                 aria-label="Toggle password visibility"
                 name={showPassword ? "eye slash" : "eye"}
                 link
