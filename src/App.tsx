@@ -1,15 +1,35 @@
 import { ApolloProvider } from "@apollo/client";
-import { Button } from "semantic-ui-react";
+import { ToastContainer } from "react-toastify";
 import client from "./config/apollo";
+import AuthContext from "./context/AuthContext";
+import AuthProvider from "./context/AuthProvider";
+import Auth from "./pages/Auth";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div className="app">
-        <h1>Estamos en App</h1>
-        <Button primary>Primary</Button>
-        <Button secondary>Secondary</Button>
-      </div>
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({auth}) => (
+            <>
+              {auth ? <Home /> : <Auth />}
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                pauseOnFocusLoss
+                rtl={false}
+                draggable
+                pauseOnHover
+                theme="colored"
+              />
+            </>
+          )}
+        </AuthContext.Consumer>
+      </AuthProvider>
     </ApolloProvider>
   );
 };
