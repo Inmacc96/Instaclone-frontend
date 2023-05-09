@@ -17,6 +17,7 @@ import {
   VALIDATIONS_SIGNUP,
 } from "../../../utils/constants";
 import "./SignUpForm.scss";
+import useTogglePassword from "../../../hooks/useTogglePassword";
 
 type SignUpProps = {
   handleShowLogin: (isShow: boolean) => void;
@@ -38,8 +39,11 @@ const SignUpForm = ({ handleShowLogin }: SignUpProps) => {
     handleSubmit
   );
   const [newUser] = useMutation(SIGNUP_USER);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const { showPassword, toggleShowPassword } = useTogglePassword();
+  const {
+    showPassword: showRepeatPassword,
+    toggleShowPassword: toggleShowRepeatPassword,
+  } = useTogglePassword();
 
   async function handleSubmit() {
     // Enviar los datos al backend
@@ -58,14 +62,6 @@ const SignUpForm = ({ handleShowLogin }: SignUpProps) => {
       toast.error(err.message);
     }
   }
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleShowRepeatPassword = () => {
-    setShowRepeatPassword(!showRepeatPassword);
-  };
 
   return (
     <>
