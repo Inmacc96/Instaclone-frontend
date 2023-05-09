@@ -5,13 +5,8 @@ export interface SignUpFormData {
   password: string;
   repeatpassword: string;
 }
-export interface SignUpFormTouched {
-  name: boolean;
-  username: boolean;
-  email: boolean;
-  password: boolean;
-  repeatpassword: boolean;
-}
+export type SignUpFormTouched = Record<keyof SignUpFormData, boolean>
+
 export interface validateSignUpForm {
   name: (v: string) => string;
   username: (v: string) => string;
