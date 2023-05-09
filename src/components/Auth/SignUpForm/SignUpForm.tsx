@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { Button, Form, Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { ApolloError, useMutation } from "@apollo/client";
 import { SIGNUP_USER } from "../../../gql/user";
 import useForm from "../../../hooks/useForm";
+import useTogglePassword from "../../../hooks/useTogglePassword";
 import IconPopup from "../../IconPopup";
 import {
   SignUpFormData,
   SignUpFormTouched,
-  validateSignUpForm,
+  ValidateSignUpForm,
 } from "../../../types/auth";
 import {
   INITIAL_ERRORS_SIGNUP,
@@ -17,7 +17,6 @@ import {
   VALIDATIONS_SIGNUP,
 } from "../../../utils/constants";
 import "./SignUpForm.scss";
-import useTogglePassword from "../../../hooks/useTogglePassword";
 
 type SignUpProps = {
   handleShowLogin: (isShow: boolean) => void;
@@ -31,7 +30,7 @@ const SignUpForm = ({ handleShowLogin }: SignUpProps) => {
     handleBlur,
     onSubmit,
     resetForm,
-  } = useForm<SignUpFormData, SignUpFormTouched, validateSignUpForm>(
+  } = useForm<SignUpFormData, SignUpFormTouched, ValidateSignUpForm>(
     INITIAL_VALUES_SIGNUP,
     INITIAL_ERRORS_SIGNUP,
     INITIAL_TOUCHED_FIELDS_SIGNUP,
