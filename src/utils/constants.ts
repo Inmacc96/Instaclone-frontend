@@ -1,9 +1,19 @@
 import {
+  LogInFormData,
+  LogInFormTouched,
   SignUpFormData,
   SignUpFormTouched,
-  validateSignUpForm,
+  ValidateLogInForm,
+  ValidateSignUpForm,
 } from "../types/auth";
-import { validateEmail, validateName, validatePassword, validateRepeatPassword, validateUsername } from "../validations/validateSignUp";
+import { validateEmailLogin, validatePasswordLogin } from "../validations/validateLogIn";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validateRepeatPassword,
+  validateUsername,
+} from "../validations/validateSignUp";
 
 export const TOKEN = "token";
 
@@ -31,10 +41,30 @@ export const INITIAL_TOUCHED_FIELDS_SIGNUP: SignUpFormTouched = {
   repeatpassword: false,
 };
 
-export const VALIDATIONS_SIGNUP: validateSignUpForm = {
+export const VALIDATIONS_SIGNUP: ValidateSignUpForm = {
   name: validateName,
   username: validateUsername,
   email: validateEmail,
   password: validatePassword,
   repeatpassword: validateRepeatPassword,
+};
+
+export const INITIAL_VALUES_LOGIN: LogInFormData = {
+  email: "",
+  password: "",
+};
+
+export const INITIAL_ERRORS_LOGIN: LogInFormData = {
+  email: "",
+  password: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_LOGIN: LogInFormTouched = {
+  email: false,
+  password: false,
+};
+
+export const VALIDATIONS_LOGIN: ValidateLogInForm = {
+  email: validateEmailLogin,
+  password: validatePasswordLogin,
 };
