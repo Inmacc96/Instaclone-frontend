@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Container, Grid, Image } from "semantic-ui-react";
+import RightHeader from "./RightHeader/RightHeader";
 import Logo from "../../assets/png/instaclone.png";
 import "./Header.scss";
 
@@ -17,7 +18,7 @@ const Header = () => {
             <p>buscador</p>
           </Grid.Column>
           <Grid.Column width={3}>
-            <p>Opciones</p>
+           <RightHeader />
           </Grid.Column>
         </Grid>
       </Container>

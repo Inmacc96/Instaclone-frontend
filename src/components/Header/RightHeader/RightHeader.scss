@@ -1,0 +1,33 @@
+@import "../../../scss/index.scss";
+
+.right-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 19px;
+
+  i.icon {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    color: $font-dark;
+  }
+
+  .ui.image.avatar {
+    margin: 0;
+    width: 25px;
+    height: 25px;
+    border: 1px solid $border-dark;
+    padding: 2px;
+  }
+
+  i.icon,
+  .ui.image.avatar {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
