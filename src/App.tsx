@@ -1,10 +1,12 @@
 import { ApolloProvider } from "@apollo/client";
+import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import client from "./config/apollo";
 import AuthContext from "./context/AuthContext";
 import AuthProvider from "./context/AuthProvider";
+import { router } from './router';
 import Auth from "./pages/Auth";
-import Home from "./pages/Home";
+
 
 const App = () => {
   return (
@@ -13,7 +15,7 @@ const App = () => {
         <AuthContext.Consumer>
           {({auth}) => (
             <>
-              {auth ? <Home /> : <Auth />}
+              {auth ? <RouterProvider router={router} /> : <Auth />}
               <ToastContainer
                 position="top-right"
                 autoClose={3000}
