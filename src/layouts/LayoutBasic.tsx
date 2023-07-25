@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+import Header from "../components/Header";
 
 interface ILayoutBasicProps {
   children?: JSX.Element;
@@ -8,11 +9,9 @@ interface ILayoutBasicProps {
 const LayoutBasic = ({ children }: ILayoutBasicProps) => {
   return (
     <>
-      <h1>MENU LAYOUT</h1>
+      <Header />
 
-      <Container className="layout-basic">
-        {children ?? <Outlet />}
-      </Container>
+      <Container className="layout-basic">{children ?? <Outlet />}</Container>
     </>
   );
 };
