@@ -10,7 +10,7 @@ export const router = createBrowserRouter([
       errorElement: <Error404 />
     },
     {
-      path: "/user",
+      path: "/:username",
       element: <User />,
       errorElement: <Error404 />
     },
