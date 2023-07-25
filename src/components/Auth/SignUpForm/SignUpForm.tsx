@@ -1,110 +1,95 @@
-import { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Form, Button, Icon } from "semantic-ui-react";
-import { ApolloError, useMutation } from "@apollo/client";
+import { Button, Form, Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
-import IconPopup from "../../IconPopup";
-import { NewUser } from "../../../types/auth";
+import { ApolloError, useMutation } from "@apollo/client";
 import { SIGNUP_USER } from "../../../gql/user";
+import useForm from "../../../hooks/useForm";
+import useTogglePassword from "../../../hooks/useTogglePassword";
+import IconPopup from "../../IconPopup";
+import {
+  SignUpFormData,
+  SignUpFormTouched,
+  ValidateSignUpForm,
+} from "../../../types/auth";
+import {
+  INITIAL_ERRORS_SIGNUP,
+  INITIAL_TOUCHED_FIELDS_SIGNUP,
+  INITIAL_VALUES_SIGNUP,
+  VALIDATIONS_SIGNUP,
+} from "../../../utils/constants";
 import "./SignUpForm.scss";
 
-type SignUpProp = {
+type SignUpProps = {
   handleShowLogin: (isShow: boolean) => void;
 };
 
-const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
+const SignUpForm = ({ handleShowLogin }: SignUpProps) => {
+  const {
+    formData,
+    errorsForm,
+    handleChange,
+    handleBlur,
+    onSubmit,
+    resetForm,
+  } = useForm<SignUpFormData, SignUpFormTouched, ValidateSignUpForm>(
+    INITIAL_VALUES_SIGNUP,
+    INITIAL_ERRORS_SIGNUP,
+    INITIAL_TOUCHED_FIELDS_SIGNUP,
+    VALIDATIONS_SIGNUP,
+    handleSubmit
+  );
   const [newUser] = useMutation(SIGNUP_USER);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const { showPassword, toggleShowPassword } = useTogglePassword();
+  const {
+    showPassword: showRepeatPassword,
+    toggleShowPassword: toggleShowRepeatPassword,
+  } = useTogglePassword();
 
-  const initialValues: NewUser = {
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    repeatpassword: "",
-  };
-
-  const formik = useFormik({
-    initialValues,
-    validationSchema: Yup.object({
-      name: Yup.string().required("Your name is required"),
-      username: Yup.string()
-        .matches(/^[a-zA-Z0-9-]*$/, "The username cannot contain spaces")
-        .required("Username is required"),
-      email: Yup.string()
-        .email("This email is not valid")
-        .required("Email is required"),
-      password: Yup.string()
-        .required("Password is required")
-        .oneOf([Yup.ref("repeatpassword")], "Passwords are not equal"),
-      repeatpassword: Yup.string()
-        .required("Password is required")
-        .oneOf([Yup.ref("password")], "Passwords are not equal"),
-    }),
-    onSubmit: async (values) => {
-      const { name, username, email, password } = values;
-      try {
-        await newUser({
-          variables: {
-            input: { name, username, email, password },
-          },
-        });
-        toast.success("Successfully registered user");
-        handleShowLogin(true);
-      } catch (error) {
-        const err = error as ApolloError;
-        toast.error(err.message);
-      }
-    },
-  });
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const toggleShowRepeatPassword = () => {
-    setShowRepeatPassword(!showRepeatPassword);
-  };
+  async function handleSubmit() {
+    // Enviar los datos al backend
+    const { name, username, email, password } = formData;
+    try {
+      await newUser({
+        variables: {
+          input: { name, username, email, password },
+        },
+      });
+      toast.success("Successfully registered user");
+      resetForm();
+      handleShowLogin(true);
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
+  }
 
   return (
     <>
       <h2 className="signup-form-title">
         Sign up to see photos and videos of your friends
       </h2>
-      <Form
-        data-testid="signup-form"
-        className="signup-form"
-        onSubmit={formik.handleSubmit}
-      >
+      <Form className="signup-form" onSubmit={onSubmit}>
         <Form.Input
           type="text"
           name="name"
           placeholder="Name and surname"
           autoComplete="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.name && !!formik.errors.name}
-          icon={
-            formik.touched.name &&
-            !!formik.errors.name && <IconPopup message={formik.errors.name} />
-          }
+          value={formData.name}
+          onChange={handleChange}
+          onBlur={() => handleBlur("name")}
+          error={!!errorsForm.name}
+          icon={!!errorsForm.name && <IconPopup message={errorsForm.name} />}
         />
         <Form.Input
           type="text"
           name="username"
-          placeholder="User name"
+          placeholder="Username"
           autoComplete="username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.username && !!formik.errors.username}
+          value={formData.username}
+          onChange={handleChange}
+          onBlur={() => handleBlur("username")}
+          error={!!errorsForm.username}
           icon={
-            formik.touched.username &&
-            !!formik.errors.username && (
-              <IconPopup message={formik.errors.username} />
-            )
+            !!errorsForm.username && <IconPopup message={errorsForm.username} />
           }
         />
         <Form.Input
@@ -112,31 +97,27 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
           name="email"
           placeholder="Email"
           autoComplete="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && !!formik.errors.email}
-          icon={
-            formik.touched.email &&
-            !!formik.errors.email && <IconPopup message={formik.errors.email} />
-          }
+          value={formData.email}
+          onChange={handleChange}
+          onBlur={() => handleBlur("email")}
+          error={!!errorsForm.email}
+          icon={!!errorsForm.email && <IconPopup message={errorsForm.email} />}
         />
         <Form.Input
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
           autoComplete="new-password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && !!formik.errors.password}
+          value={formData.password}
+          onChange={handleChange}
+          onBlur={() => handleBlur("password")}
+          error={!!errorsForm.password}
           icon={
             <div className="container-icon-password">
-              {formik.touched.password && !!formik.errors.password && (
-                <IconPopup message={formik.errors.password} />
+              {!!errorsForm.password && (
+                <IconPopup message={errorsForm.password} />
               )}
               <Icon
-                data-testid="eye-icon-password"
                 aria-label="Toggle password visibility"
                 name={showPassword ? "eye slash" : "eye"}
                 link
@@ -149,19 +130,16 @@ const SignUpForm = ({ handleShowLogin }: SignUpProp) => {
           type={showRepeatPassword ? "text" : "password"}
           name="repeatpassword"
           placeholder="Repeat Password"
-          autoComplete="new-password"
-          value={formik.values.repeatpassword}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.repeatpassword && !!formik.errors.repeatpassword
-          }
+          autoComplete="repeat-password"
+          value={formData.repeatpassword}
+          onChange={handleChange}
+          onBlur={() => handleBlur("repeatpassword")}
+          error={!!errorsForm.repeatpassword}
           icon={
             <div className="container-icon-password">
-              {formik.touched.repeatpassword &&
-                !!formik.errors.repeatpassword && (
-                  <IconPopup message={formik.errors.repeatpassword} />
-                )}
+              {!!errorsForm.repeatpassword && (
+                <IconPopup message={errorsForm.repeatpassword} />
+              )}
               <Icon
                 aria-label="Toggle password visibility"
                 name={showRepeatPassword ? "eye slash" : "eye"}
