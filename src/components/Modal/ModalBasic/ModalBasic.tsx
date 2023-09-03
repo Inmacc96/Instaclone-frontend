@@ -5,7 +5,7 @@ interface IModalBasicProps {
   show: boolean;
   setShow: (v: boolean) => void;
   title: string;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | null;
 }
 
 const ModalBasic = ({ show, setShow, title, children }: IModalBasicProps) => {

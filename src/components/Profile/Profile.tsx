@@ -2,6 +2,7 @@ import { Grid, Image, Modal } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../gql/user";
 import UserNotFound from "../UserNotFound";
+import AvatarForm from "../User/AvatarForm";
 import ModalBasic from "../Modal/ModalBasic";
 import ImageNoFound from "../../assets/png/avatar.png";
 import "./Profile.scss";
@@ -13,6 +14,8 @@ interface IProfileProps {
 
 const Profile = ({ username }: IProfileProps) => {
   const [showModal, setShowModal] = useState(false);
+  const [titleModal, setTitleModal] = useState("");
+  const [childrenModal, setChildrenModal] = useState<JSX.Element | null>(null);
   const { data, loading, error } = useQuery(GET_USER, {
     variables: { username },
   });
@@ -24,11 +27,23 @@ const Profile = ({ username }: IProfileProps) => {
 
   console.log(getUser);
 
+  const handlerModal = (type: string) => {
+    switch (type) {
+      case "avatar":
+        setTitleModal("Cambiar foto de perfil");
+        setChildrenModal(<AvatarForm />);
+        setShowModal(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <Grid className="profile">
         <Grid.Column width={5} className="profile__left">
-          <Image src={ImageNoFound} avatar onClick={() => setShowModal(true)}/>
+          <Image src={ImageNoFound} avatar onClick={() => handlerModal("avatar")} />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
           <div>HeaderProfile</div>
@@ -47,10 +62,8 @@ const Profile = ({ username }: IProfileProps) => {
         </Grid.Column>
       </Grid>
 
-      <ModalBasic show={showModal} setShow={setShowModal} title="Subir avatar">
-        <p>Opciones...</p>
-        <p>Opciones...</p>
-        <p>Opciones...</p>
+      <ModalBasic show={showModal} setShow={setShowModal} title={titleModal}>
+        {childrenModal}
       </ModalBasic>
     </>
   );
