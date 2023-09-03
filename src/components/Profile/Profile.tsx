@@ -31,7 +31,7 @@ const Profile = ({ username }: IProfileProps) => {
     switch (type) {
       case "avatar":
         setTitleModal("Cambiar foto de perfil");
-        setChildrenModal(<AvatarForm />);
+        setChildrenModal(<AvatarForm setShowModal={setShowModal}/>);
         setShowModal(true);
         break;
       default:
