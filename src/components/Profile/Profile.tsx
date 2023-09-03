@@ -1,15 +1,18 @@
-import { Grid, Image } from "semantic-ui-react";
+import { Grid, Image, Modal } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../gql/user";
 import UserNotFound from "../UserNotFound";
+import ModalBasic from "../Modal/ModalBasic";
 import ImageNoFound from "../../assets/png/avatar.png";
 import "./Profile.scss";
+import { useState } from "react";
 
 interface IProfileProps {
   username?: string;
 }
 
 const Profile = ({ username }: IProfileProps) => {
+  const [showModal, setShowModal] = useState(false);
   const { data, loading, error } = useQuery(GET_USER, {
     variables: { username },
   });
@@ -25,7 +28,7 @@ const Profile = ({ username }: IProfileProps) => {
     <>
       <Grid className="profile">
         <Grid.Column width={5} className="profile__left">
-          <Image src={ImageNoFound} avatar />
+          <Image src={ImageNoFound} avatar onClick={() => setShowModal(true)}/>
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
           <div>HeaderProfile</div>
@@ -43,6 +46,12 @@ const Profile = ({ username }: IProfileProps) => {
           </div>
         </Grid.Column>
       </Grid>
+
+      <ModalBasic show={showModal} setShow={setShowModal} title="Subir avatar">
+        <p>Opciones...</p>
+        <p>Opciones...</p>
+        <p>Opciones...</p>
+      </ModalBasic>
     </>
   );
 };
