@@ -1,6 +1,7 @@
 import { Grid, Image } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../gql/user";
+import UserNotFound from "../UserNotFound";
 import ImageNoFound from "../../assets/png/avatar.png";
 import "./Profile.scss";
 
@@ -14,7 +15,7 @@ const Profile = ({ username }: IProfileProps) => {
   });
 
   if (loading) return null;
-  if (error) return <h1>Usuario no encontrado</h1>;
+  if (error) return <UserNotFound />;
 
   const { getUser } = data!;
 
