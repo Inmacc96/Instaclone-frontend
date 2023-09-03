@@ -1,6 +1,7 @@
 import { Grid, Image, Modal } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../gql/user";
+import useAuth from "../../hooks/useAuth";
 import UserNotFound from "../UserNotFound";
 import AvatarForm from "../User/AvatarForm";
 import ModalBasic from "../Modal/ModalBasic";
@@ -16,6 +17,7 @@ const Profile = ({ username }: IProfileProps) => {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState("");
   const [childrenModal, setChildrenModal] = useState<JSX.Element | null>(null);
+  const { auth } = useAuth();
   const { data, loading, error } = useQuery(GET_USER, {
     variables: { username },
   });
@@ -24,8 +26,6 @@ const Profile = ({ username }: IProfileProps) => {
   if (error) return <UserNotFound />;
 
   const { getUser } = data!;
-
-  console.log(getUser);
 
   const handlerModal = (type: string) => {
     switch (type) {
@@ -43,7 +43,13 @@ const Profile = ({ username }: IProfileProps) => {
     <>
       <Grid className="profile">
         <Grid.Column width={5} className="profile__left">
-          <Image src={ImageNoFound} avatar onClick={() => handlerModal("avatar")} />
+          <Image
+            src={ImageNoFound}
+            avatar
+            onClick={() =>
+              username === auth?.username && handlerModal("avatar")
+            }
+          />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
           <div>HeaderProfile</div>
