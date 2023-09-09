@@ -33,3 +33,9 @@ export const GET_USER = gql(`#graphql
     }
 }
 `);
+
+export const GENERATE_UPLOAD_URL = gql(`#graphql
+  query generateUploadUrl { 
+    generateUploadUrl
+  }
+`);
