@@ -2,18 +2,44 @@ import { useCallback } from "react";
 import { Button } from "semantic-ui-react";
 import { useDropzone } from "react-dropzone";
 import "./AvatarForm.scss";
-import { useQuery } from "@apollo/client";
-import { GENERATE_UPLOAD_URL } from "../../../gql/user";
+import { UploadUrl } from "../../../__generated__/graphql";
 
 interface IAvatarForm {
   setShowModal: (v: boolean) => void;
+  generateUploadUrl: UploadUrl;
 }
-const AvatarForm = ({ setShowModal }: IAvatarForm) => {
-
+const AvatarForm = ({
+  setShowModal,
+  generateUploadUrl,
+}: IAvatarForm) => {
   // Esta funcion siempre sera la misma entre renderizados, la funcion no se recreará
-  const onDrop = useCallback((acceptedFile: File[]) => {
+  const onDrop = useCallback(async (acceptedFile: File[]) => {
     const file = acceptedFile[0];
 
+    const { signature, timestamp } = generateUploadUrl;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folder", "instaclone/avatar");
+    formData.append("allowed_formats", ["png", "jpeg"].toString());
+    formData.append("timestamp", timestamp.toString());
+    formData.append("signature", signature);
+    formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
+
+    try {
+      const uploadResponse = await fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUDINARY_NAME
+        }/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await uploadResponse.json();
+      console.log(data);
+    } catch (err) {
+      console.error("Error uploading image:", err);
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({

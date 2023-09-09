@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Image, Modal } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { GENERATE_UPLOAD_URL, GET_USER } from "../../gql/user";
 import useAuth from "../../hooks/useAuth";
@@ -12,6 +12,7 @@ import "./Profile.scss";
 interface IProfileProps {
   username?: string;
 }
+const folder = "avatar";
 
 const Profile = ({ username }: IProfileProps) => {
   const [showModal, setShowModal] = useState(false);
@@ -25,12 +26,11 @@ const Profile = ({ username }: IProfileProps) => {
   } = useQuery(GET_USER, {
     variables: { username },
   });
-
   const {
     data: uploadUrlData,
     loading: uploadUrlLoading,
     error: uploadUrlError,
-  } = useQuery(GENERATE_UPLOAD_URL);
+  } = useQuery(GENERATE_UPLOAD_URL, { variables: { folder } });
 
   if (userLoading || uploadUrlLoading) return null;
   if (userError || uploadUrlError) return <UserNotFound />;
@@ -42,7 +42,12 @@ const Profile = ({ username }: IProfileProps) => {
     switch (type) {
       case "avatar":
         setTitleModal("Cambiar foto de perfil");
-        setChildrenModal(<AvatarForm setShowModal={setShowModal} />);
+        setChildrenModal(
+          <AvatarForm
+            setShowModal={setShowModal}
+            generateUploadUrl={generateUploadUrl}
+          />
+        );
         setShowModal(true);
         break;
       default:
