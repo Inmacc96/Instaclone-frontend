@@ -7,10 +7,12 @@ import { UploadUrl } from "../../../__generated__/graphql";
 interface IAvatarForm {
   setShowModal: (v: boolean) => void;
   generateUploadUrl: UploadUrl;
+  userId: string;
 }
 const AvatarForm = ({
   setShowModal,
   generateUploadUrl,
+  userId,
 }: IAvatarForm) => {
   // Esta funcion siempre sera la misma entre renderizados, la funcion no se recreará
   const onDrop = useCallback(async (acceptedFile: File[]) => {
@@ -21,6 +23,7 @@ const AvatarForm = ({
     formData.append("file", file);
     formData.append("folder", "instaclone/avatar");
     formData.append("allowed_formats", ["png", "jpeg"].toString());
+    formData.append("public_id", userId);
     formData.append("timestamp", timestamp.toString());
     formData.append("signature", signature);
     formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
