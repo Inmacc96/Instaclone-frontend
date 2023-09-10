@@ -3,6 +3,9 @@ import { Button } from "semantic-ui-react";
 import { useDropzone } from "react-dropzone";
 import "./AvatarForm.scss";
 import { UploadUrl } from "../../../__generated__/graphql";
+import { ResponseCloudinary } from "../../../types/responseCloudinary";
+import { useMutation } from "@apollo/client";
+import { UPDATE_AVATAR } from "../../../gql/user";
 
 interface IAvatarForm {
   setShowModal: (v: boolean) => void;
@@ -14,6 +17,7 @@ const AvatarForm = ({
   generateUploadUrl,
   userId,
 }: IAvatarForm) => {
+  const [updateAvatar] = useMutation(UPDATE_AVATAR);
   // Esta funcion siempre sera la misma entre renderizados, la funcion no se recreará
   const onDrop = useCallback(async (acceptedFile: File[]) => {
     const file = acceptedFile[0];
@@ -38,8 +42,9 @@ const AvatarForm = ({
           body: formData,
         }
       );
-      const data = await uploadResponse.json();
-      console.log(data);
+      const result: ResponseCloudinary = await uploadResponse.json();
+      const { url } = result;
+      await updateAvatar({ variables: { urlImage: url } });
     } catch (err) {
       console.error("Error uploading image:", err);
     }
