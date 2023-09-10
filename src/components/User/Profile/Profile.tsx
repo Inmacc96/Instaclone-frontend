@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Grid, Image } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
-import { GENERATE_UPLOAD_URL, GET_USER } from "../../gql/user";
-import useAuth from "../../hooks/useAuth";
-import UserNotFound from "../UserNotFound";
-import AvatarForm from "../User/AvatarForm";
-import ModalBasic from "../Modal/ModalBasic";
-import ImageNoFound from "../../assets/png/avatar.png";
+import { GENERATE_UPLOAD_URL, GET_USER } from "../../../gql/user";
+import useAuth from "../../../hooks/useAuth";
+import UserNotFound from "../../UserNotFound";
+import AvatarForm from "../AvatarForm";
+import ModalBasic from "../../Modal/ModalBasic";
+import ImageNoFound from "../../../assets/png/avatar.png";
 import "./Profile.scss";
 
 interface IProfileProps {
