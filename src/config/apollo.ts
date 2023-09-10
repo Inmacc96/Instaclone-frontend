@@ -1,4 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { getToken } from "../utils/token";
 
 const uri = import.meta.env.VITE_BACKEND_URI;
 
@@ -8,8 +10,16 @@ if (!uri) {
 
 const httpLink = createHttpLink({ uri });
 
+const authLink = setContext((_, { headers }) => {
+  const token = getToken();
+
+  return {
+    headers: { ...headers, Authorization: token ? `Bearer ${token}` : "" },
+  };
+});
+
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
