@@ -61,7 +61,7 @@ const Profile = ({ username }: IProfileProps) => {
       <Grid className="profile">
         <Grid.Column width={5} className="profile__left">
           <Image
-            src={ImageNoFound}
+            src={getUser?.avatar || ImageNoFound}
             avatar
             onClick={() =>
               username === auth?.username && handlerModal("avatar")
