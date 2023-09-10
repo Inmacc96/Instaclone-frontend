@@ -47,8 +47,16 @@ export const UPDATE_AVATAR = gql(`#graphql
   mutation updateAvatar($urlImage: String!){
     updateAvatar(urlImage: $urlImage){
       id
-      username
       avatar
     }
 }
 `);
+
+export const DELETE_AVATAR = gql(`#graphql
+  mutation deleteAvatar {
+    deleteAvatar {
+      id
+      avatar
+    }
+  }
+`)

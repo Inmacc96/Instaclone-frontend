@@ -5,7 +5,7 @@ import "./AvatarForm.scss";
 import { UploadUrl } from "../../../__generated__/graphql";
 import { ResponseCloudinary } from "../../../types/responseCloudinary";
 import { useMutation } from "@apollo/client";
-import { UPDATE_AVATAR } from "../../../gql/user";
+import { DELETE_AVATAR, UPDATE_AVATAR } from "../../../gql/user";
 import { toast } from "react-toastify";
 
 interface IAvatarForm {
@@ -19,6 +19,7 @@ const AvatarForm = ({
   userId,
 }: IAvatarForm) => {
   const [updateAvatar] = useMutation(UPDATE_AVATAR);
+  const [deleteAvatar] = useMutation(DELETE_AVATAR);
   const [loading, setLoading] = useState(false);
   // Esta funcion siempre sera la misma entre renderizados, la funcion no se recreará
   const onDrop = useCallback(async (acceptedFile: File[]) => {
@@ -64,12 +65,23 @@ const AvatarForm = ({
     onDrop,
   });
 
+  const onDeleteAvatar = async () => {
+    try {
+      await deleteAvatar();
+    } catch (err) {
+      toast.warning("Error al borrar el avatar")
+      console.log(err);
+    } finally {
+      setShowModal(false);
+    }
+  };
+
   return (
     <div className="avatar-form">
       <Button {...(getRootProps() as any)} loading={loading}>
         Cargar una foto
       </Button>
-      <Button>Eliminar foto actual</Button>
+      <Button onClick={onDeleteAvatar}>Eliminar foto actual</Button>
       <Button onClick={() => setShowModal(false)}>Cancelar</Button>
       <input {...getInputProps()} />
     </div>
