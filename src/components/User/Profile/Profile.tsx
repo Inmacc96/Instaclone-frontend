@@ -8,6 +8,7 @@ import AvatarForm from "../AvatarForm";
 import ModalBasic from "../../Modal/ModalBasic";
 import ImageNoFound from "../../../assets/png/avatar.png";
 import "./Profile.scss";
+import HeaderProfile from "./HeaderProfile";
 
 interface IProfileProps {
   username?: string;
@@ -69,7 +70,7 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <div>HeaderProfile</div>
+          <HeaderProfile username={username} />
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser!.name}</p>
