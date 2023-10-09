@@ -9,6 +9,7 @@ import ModalBasic from "../../Modal/ModalBasic";
 import ImageNoFound from "../../../assets/png/avatar.png";
 import "./Profile.scss";
 import HeaderProfile from "./HeaderProfile";
+import SettingsForm from "../SettingsForm";
 
 interface IProfileProps {
   username?: string;
@@ -54,11 +55,7 @@ const Profile = ({ username }: IProfileProps) => {
         break;
       case "settings":
         setTitleModal("");
-        setChildrenModal(
-          <div>
-            <h2>Ajustes del perfil</h2>
-          </div>
-        );
+        setChildrenModal(<SettingsForm setShowModal={setShowModal} />);
         setShowModal(true);
         break;
       default:
@@ -79,7 +76,7 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <HeaderProfile username={username} handlerModal={handlerModal}/>
+          <HeaderProfile username={username} handlerModal={handlerModal} />
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser!.name}</p>
