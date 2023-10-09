@@ -4,16 +4,17 @@ import "./HeaderProfile.scss";
 
 interface HeaderProfileProps {
   username?: string;
+  handlerModal: (v: string) => void;
 }
 
-const HeaderProfile = ({ username }: HeaderProfileProps) => {
+const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
   const { auth } = useAuth();
 
   return (
     <div className="header-profile">
       <h2>{username}</h2>
-      {auth && username === auth.username ? (
-        <Button>Ajustes</Button>
+      {username === auth?.username ? (
+        <Button onClick={() => handlerModal("settings")}>Ajustes</Button>
       ) : (
         <Button>Seguir</Button>
       )}

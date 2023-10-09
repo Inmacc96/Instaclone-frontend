@@ -52,6 +52,15 @@ const Profile = ({ username }: IProfileProps) => {
         );
         setShowModal(true);
         break;
+      case "settings":
+        setTitleModal("");
+        setChildrenModal(
+          <div>
+            <h2>Ajustes del perfil</h2>
+          </div>
+        );
+        setShowModal(true);
+        break;
       default:
         break;
     }
@@ -70,7 +79,7 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <HeaderProfile username={username} />
+          <HeaderProfile username={username} handlerModal={handlerModal}/>
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser!.name}</p>
