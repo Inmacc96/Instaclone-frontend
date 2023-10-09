@@ -6,12 +6,23 @@ import { useNavigate } from "react-router-dom";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
+  setTitleModal: (v: string) => void;
+  setChildrenModal: (v: JSX.Element) => void;
 }
 
-const SettingsForm = ({ setShowModal }: SettingsFormProps) => {
+const SettingsForm = ({
+  setShowModal,
+  setTitleModal,
+  setChildrenModal,
+}: SettingsFormProps) => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
   const client = useApolloClient();
+
+  const onChangePassword = () => {
+    setTitleModal("Cambiar tu contraseña");
+    setChildrenModal(<h1>cambiar contraseña</h1>);
+  };
 
   const onLogOut = () => {
     client.clearStore();
@@ -21,7 +32,7 @@ const SettingsForm = ({ setShowModal }: SettingsFormProps) => {
 
   return (
     <div className="settings-form">
-      <Button>Cambiar contraseña</Button>
+      <Button onClick={onChangePassword}>Cambiar contraseña</Button>
       <Button>Cambiar email</Button>
       <Button>Descripción</Button>
       <Button>Sitio Web</Button>

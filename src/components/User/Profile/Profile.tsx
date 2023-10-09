@@ -55,7 +55,13 @@ const Profile = ({ username }: IProfileProps) => {
         break;
       case "settings":
         setTitleModal("");
-        setChildrenModal(<SettingsForm setShowModal={setShowModal} />);
+        setChildrenModal(
+          <SettingsForm
+            setShowModal={setShowModal}
+            setTitleModal={setTitleModal}
+            setChildrenModal={setChildrenModal}
+          />
+        );
         setShowModal(true);
         break;
       default:
