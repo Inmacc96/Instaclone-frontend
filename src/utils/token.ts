@@ -25,3 +25,7 @@ export const decodeToken = (token?: string): DecodedToken | null => {
     return null;
   }
 };
+
+export const removeToken = () => {
+  localStorage.removeItem(TOKEN);
+};
