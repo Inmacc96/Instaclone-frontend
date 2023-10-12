@@ -14,7 +14,7 @@ const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
     <div className="header-profile">
       <h2>{username}</h2>
       {username === auth?.username ? (
-        <Button onClick={() => handlerModal("settings")}>Ajustes</Button>
+        <Button onClick={() => handlerModal("settings")}>Settings</Button>
       ) : (
         <Button>Seguir</Button>
       )}

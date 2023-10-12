@@ -50,7 +50,7 @@ const AvatarForm = ({
       const { url } = result;
       await updateAvatar({ variables: { urlImage: url } });
     } catch (err) {
-      toast.warning("Error al actualizar la foto de perfil");
+      toast.warning("Error updating profile image");
       console.error("Error uploading image:", err);
     } finally {
       setLoading(false);
@@ -69,7 +69,7 @@ const AvatarForm = ({
     try {
       await deleteAvatar();
     } catch (err) {
-      toast.warning("Error al borrar el avatar")
+      toast.warning("Error deleting avatar")
       console.log(err);
     } finally {
       setShowModal(false);
@@ -79,10 +79,10 @@ const AvatarForm = ({
   return (
     <div className="avatar-form">
       <Button {...(getRootProps() as any)} loading={loading}>
-        Cargar una foto
+       Upload a image
       </Button>
-      <Button onClick={onDeleteAvatar}>Eliminar foto actual</Button>
-      <Button onClick={() => setShowModal(false)}>Cancelar</Button>
+      <Button onClick={onDeleteAvatar}>Remove current image</Button>
+      <Button onClick={() => setShowModal(false)}>Cancel</Button>
       <input {...getInputProps()} />
     </div>
   );

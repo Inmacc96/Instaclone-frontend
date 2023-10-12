@@ -21,7 +21,7 @@ const SettingsForm = ({
   const client = useApolloClient();
 
   const onChangePassword = () => {
-    setTitleModal("Cambiar tu contraseña");
+    setTitleModal("Change your password");
     setChildrenModal(<PasswordForm />);
   };
 
@@ -33,12 +33,12 @@ const SettingsForm = ({
 
   return (
     <div className="settings-form">
-      <Button onClick={onChangePassword}>Cambiar contraseña</Button>
-      <Button>Cambiar email</Button>
-      <Button>Descripción</Button>
-      <Button>Sitio Web</Button>
-      <Button onClick={onLogOut}>Cerrar sesión</Button>
-      <Button onClick={() => setShowModal(false)}>Cancelar</Button>
+      <Button onClick={onChangePassword}>Change Password</Button>
+      <Button>Change email</Button>
+      <Button>Description</Button>
+      <Button>Website</Button>
+      <Button onClick={onLogOut}>Log out</Button>
+      <Button onClick={() => setShowModal(false)}>Cancel</Button>
     </div>
   );
 };
