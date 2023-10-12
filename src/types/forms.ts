@@ -14,3 +14,13 @@ export interface ValidateChangePassword {
   newPassword: (v: ChangePasswordFormData) => string;
   repeatNewPassword: (v: ChangePasswordFormData) => string;
 }
+
+export interface ChangeEmailFormData {
+  email: string;
+}
+
+export type ChangeEmailFormTouched = Record<keyof ChangeEmailFormData, boolean>;
+
+export interface ValidateChangeEmail {
+  email: (v: ChangeEmailFormData) => string;
+}

@@ -5,17 +5,20 @@ import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import PasswordForm from "../PasswordForm";
 import EmailForm from "../EmailForm";
+import { User } from "../../../__generated__/graphql";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
   setTitleModal: (v: string) => void;
   setChildrenModal: (v: JSX.Element) => void;
+  user: User;
 }
 
 const SettingsForm = ({
   setShowModal,
   setTitleModal,
   setChildrenModal,
+  user,
 }: SettingsFormProps) => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
@@ -28,8 +31,8 @@ const SettingsForm = ({
 
   const onChangeEmail = () => {
     setTitleModal("Change your email");
-    setChildrenModal(<EmailForm setShowModal={setShowModal} />);
-  }
+    setChildrenModal(<EmailForm setShowModal={setShowModal} currentEmail={user.email} />);
+  };
 
   const onLogOut = () => {
     client.clearStore();

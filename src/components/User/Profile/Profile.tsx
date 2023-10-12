@@ -48,7 +48,7 @@ const Profile = ({ username }: IProfileProps) => {
           <AvatarForm
             setShowModal={setShowModal}
             generateUploadUrl={generateUploadUrl}
-            userId={getUser?.id!}
+            userId={getUser?.id}
           />
         );
         setShowModal(true);
@@ -60,6 +60,7 @@ const Profile = ({ username }: IProfileProps) => {
             setShowModal={setShowModal}
             setTitleModal={setTitleModal}
             setChildrenModal={setChildrenModal}
+            user={getUser}
           />
         );
         setShowModal(true);
@@ -85,7 +86,7 @@ const Profile = ({ username }: IProfileProps) => {
           <HeaderProfile username={username} handlerModal={handlerModal} />
           <div>Followers</div>
           <div className="other">
-            <p className="name">{getUser!.name}</p>
+            <p className="name">{getUser.name}</p>
             {getUser?.siteWeb && (
               <a href={getUser?.siteWeb} className="siteWeb" target="_blank">
                 {getUser?.siteWeb}

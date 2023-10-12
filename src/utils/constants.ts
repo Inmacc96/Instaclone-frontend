@@ -7,10 +7,14 @@ import {
   ValidateSignUpForm,
 } from "../types/auth";
 import {
+  ChangeEmailFormData,
+  ChangeEmailFormTouched,
   ChangePasswordFormData,
   ChangePasswordFormTouched,
+  ValidateChangeEmail,
   ValidateChangePassword,
 } from "../types/forms";
+import { validateNewEmail } from "../validations/validateChangeEmail";
 import {
   validateNewPassword,
   validateOldPassword,
@@ -105,4 +109,16 @@ export const VALIDATIONS_CHANGE_PASSWORD: ValidateChangePassword = {
   oldPassword: validateOldPassword,
   newPassword: validateNewPassword,
   repeatNewPassword: validateRepeatNewPassword,
+};
+
+export const INITIAL_ERRORS_CHANGE_EMAIL: ChangeEmailFormData = {
+  email: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_EMAIL: ChangeEmailFormTouched = {
+  email: false,
+};
+
+export const VALIDATIONS_CHANGE_EMAIL: ValidateChangeEmail = {
+  email: validateNewEmail,
 };
