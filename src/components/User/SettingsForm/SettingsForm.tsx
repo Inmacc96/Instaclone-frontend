@@ -11,7 +11,7 @@ interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
   setTitleModal: (v: string) => void;
   setChildrenModal: (v: JSX.Element) => void;
-  user: User;
+  user: Omit<User, "password">;
 }
 
 const SettingsForm = ({
