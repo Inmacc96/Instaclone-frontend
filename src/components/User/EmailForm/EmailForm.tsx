@@ -1,5 +1,9 @@
 import { Form, Button } from "semantic-ui-react";
-import "./EmailForm.scss";
+import { toast } from "react-toastify";
+import { ApolloError, useMutation } from "@apollo/client";
+import IconPopup from "../../IconPopup";
+import useForm from "../../../hooks/useForm";
+import { UPDATE_USER } from "../../../gql/user";
 import {
   INITIAL_ERRORS_CHANGE_EMAIL,
   INITIAL_TOUCHED_FIELDS_CHANGE_EMAIL,
@@ -10,8 +14,7 @@ import {
   ChangeEmailFormTouched,
   ValidateChangeEmail,
 } from "../../../types/forms";
-import useForm from "../../../hooks/useForm";
-import IconPopup from "../../IconPopup";
+import "./EmailForm.scss";
 
 interface EmailFormProps {
   setShowModal: (v: boolean) => void;
@@ -30,8 +33,19 @@ const EmailForm = ({ setShowModal, currentEmail }: EmailFormProps) => {
     VALIDATIONS_CHANGE_EMAIL,
     handleSubmit
   );
+  const [updateUser] = useMutation(UPDATE_USER);
 
-  async function handleSubmit() {}
+  async function handleSubmit() {
+    const { email } = formData;
+    try {
+      await updateUser({ variables: { input: { email } } });
+      toast.success("Email successfully updated");
+      setShowModal(false);
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
+  }
 
   return (
     <Form className="email-form" onSubmit={onSubmit}>
