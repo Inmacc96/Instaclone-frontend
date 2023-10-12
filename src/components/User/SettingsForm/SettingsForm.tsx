@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import PasswordForm from "../PasswordForm";
 import EmailForm from "../EmailForm";
 import { User } from "../../../__generated__/graphql";
+import DescriptionForm from "../DescriptionForm";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
@@ -31,7 +32,19 @@ const SettingsForm = ({
 
   const onChangeEmail = () => {
     setTitleModal("Change your email");
-    setChildrenModal(<EmailForm setShowModal={setShowModal} currentEmail={user.email} />);
+    setChildrenModal(
+      <EmailForm setShowModal={setShowModal} currentEmail={user.email} />
+    );
+  };
+
+  const onChangeDescription = () => {
+    setTitleModal("Update your biography");
+    setChildrenModal(
+      <DescriptionForm
+        setShowModal={setShowModal}
+       // currentDescription={user.description}
+      />
+    );
   };
 
   const onLogOut = () => {
@@ -44,7 +57,7 @@ const SettingsForm = ({
     <div className="settings-form">
       <Button onClick={onChangePassword}>Change password</Button>
       <Button onClick={onChangeEmail}>Change email</Button>
-      <Button>Description</Button>
+      <Button onClick={onChangeDescription}>Description</Button>
       <Button>Website</Button>
       <Button onClick={onLogOut}>Log out</Button>
       <Button onClick={() => setShowModal(false)}>Cancel</Button>

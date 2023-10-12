@@ -1,0 +1,15 @@
+@import "../../../scss/index.scss";
+
+.ui.form.description-form {
+  margin: 20px;
+
+  textarea {
+    padding: 13px 15px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+
+    &.error {
+      border: 1px solid $danger;
+    }
+  }
+}
