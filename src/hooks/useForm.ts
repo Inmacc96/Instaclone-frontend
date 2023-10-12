@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useForm = <
-  T extends object,
+  T extends Record<keyof T, string>,
   U extends Record<keyof T, boolean>,
   V extends Record<keyof T, any>
 >(
@@ -30,18 +30,9 @@ const useForm = <
 
     for (const fieldName in formData) {
       if (touchedFields[fieldName]) {
-        const fieldValue = formData[fieldName];
         const validationFn = validations[fieldName];
 
-        if (fieldName === "password" && "repeatpassword" in formData) {
-          const fieldRepeatPassword = formData.repeatpassword;
-          errors[fieldName] = validationFn(fieldValue, fieldRepeatPassword);
-        } else if (fieldName === "repeatpassword" && "password" in formData) {
-          const fieldPassword = formData.password;
-          errors[fieldName] = validationFn(fieldPassword, fieldValue);
-        } else {
-          errors[fieldName] = validationFn(fieldValue);
-        }
+        errors[fieldName] = validationFn(formData);
       }
     }
 

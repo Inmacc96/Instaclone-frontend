@@ -9,11 +9,11 @@ export interface SignUpFormData {
 export type SignUpFormTouched = Record<keyof SignUpFormData, boolean>;
 
 export interface ValidateSignUpForm {
-  name: (v: string) => string;
-  username: (v: string) => string;
-  email: (v: string) => string;
-  password: (v: string, w: string) => string;
-  repeatpassword: (v: string, w: string) => string;
+  name: (v: SignUpFormData) => string;
+  username: (v: SignUpFormData) => string;
+  email: (v: SignUpFormData) => string;
+  password: (v: SignUpFormData) => string;
+  repeatpassword: (v: SignUpFormData) => string;
 }
 
 export interface LogInFormData {
@@ -24,8 +24,8 @@ export interface LogInFormData {
 export type LogInFormTouched = Record<keyof LogInFormData, boolean>;
 
 export interface ValidateLogInForm {
-  email: (v: string) => string;
-  password: (v: string) => string;
+  email: (v: LogInFormData) => string;
+  password: (v: LogInFormData) => string;
 }
 
 export interface DecodedToken {
