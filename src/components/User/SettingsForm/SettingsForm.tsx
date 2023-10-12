@@ -3,6 +3,7 @@ import { useApolloClient } from "@apollo/client";
 import "./SettingsForm.scss";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import PasswordForm from "../PasswordForm";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
@@ -21,7 +22,7 @@ const SettingsForm = ({
 
   const onChangePassword = () => {
     setTitleModal("Cambiar tu contraseña");
-    setChildrenModal(<h1>cambiar contraseña</h1>);
+    setChildrenModal(<PasswordForm />);
   };
 
   const onLogOut = () => {

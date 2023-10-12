@@ -6,7 +6,20 @@ import {
   ValidateLogInForm,
   ValidateSignUpForm,
 } from "../types/auth";
-import { validateEmailLogin, validatePasswordLogin } from "../validations/validateLogIn";
+import {
+  ChangePasswordFormData,
+  ChangePasswordFormTouched,
+  ValidateChangePassword,
+} from "../types/forms";
+import {
+  validateNewPassword,
+  validateOldPassword,
+  validateRepeatNewPassword,
+} from "../validations/validateChangePassword";
+import {
+  validateEmailLogin,
+  validatePasswordLogin,
+} from "../validations/validateLogIn";
 import {
   validateEmail,
   validateName,
@@ -67,4 +80,29 @@ export const INITIAL_TOUCHED_FIELDS_LOGIN: LogInFormTouched = {
 export const VALIDATIONS_LOGIN: ValidateLogInForm = {
   email: validateEmailLogin,
   password: validatePasswordLogin,
+};
+
+export const INITIAL_VALUES_CHANGE_PASSWORD: ChangePasswordFormData = {
+  oldPassword: "",
+  newPassword: "",
+  repeatNewPassword: "",
+};
+
+export const INITIAL_ERRORS_CHANGE_PASSWORD: ChangePasswordFormData = {
+  oldPassword: "",
+  newPassword: "",
+  repeatNewPassword: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_PASSWORD: ChangePasswordFormTouched =
+  {
+    oldPassword: false,
+    newPassword: false,
+    repeatNewPassword: false,
+  };
+
+export const VALIDATIONS_CHANGE_PASSWORD: ValidateChangePassword = {
+  oldPassword: validateOldPassword,
+  newPassword: validateNewPassword,
+  repeatNewPassword: validateRepeatNewPassword,
 };
