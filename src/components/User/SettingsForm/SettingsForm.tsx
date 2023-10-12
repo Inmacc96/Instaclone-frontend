@@ -4,6 +4,7 @@ import "./SettingsForm.scss";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import PasswordForm from "../PasswordForm";
+import EmailForm from "../EmailForm";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
@@ -25,6 +26,11 @@ const SettingsForm = ({
     setChildrenModal(<PasswordForm setShowModal={setShowModal} />);
   };
 
+  const onChangeEmail = () => {
+    setTitleModal("Change your email");
+    setChildrenModal(<EmailForm setShowModal={setShowModal} />);
+  }
+
   const onLogOut = () => {
     client.clearStore();
     logOut();
@@ -34,7 +40,7 @@ const SettingsForm = ({
   return (
     <div className="settings-form">
       <Button onClick={onChangePassword}>Change password</Button>
-      <Button>Change email</Button>
+      <Button onClick={onChangeEmail}>Change email</Button>
       <Button>Description</Button>
       <Button>Website</Button>
       <Button onClick={onLogOut}>Log out</Button>
