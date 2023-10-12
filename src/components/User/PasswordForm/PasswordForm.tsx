@@ -1,7 +1,10 @@
 import { Form, Button, Icon } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { ApolloError, useMutation } from "@apollo/client";
 import IconPopup from "../../IconPopup";
 import useForm from "../../../hooks/useForm";
 import useTogglePassword from "../../../hooks/useTogglePassword";
+import { UPDATE_USER } from "../../../gql/user";
 import {
   INITIAL_ERRORS_CHANGE_PASSWORD,
   INITIAL_TOUCHED_FIELDS_CHANGE_PASSWORD,
@@ -15,7 +18,11 @@ import {
 } from "../../../types/forms";
 import "./PasswordForm.scss";
 
-const PasswordForm = () => {
+interface PasswordFormProps {
+  setShowModal: (v: boolean) => void;
+}
+
+const PasswordForm = ({ setShowModal }: PasswordFormProps) => {
   const { formData, errorsForm, handleChange, handleBlur, onSubmit } = useForm<
     ChangePasswordFormData,
     ChangePasswordFormTouched,
@@ -36,10 +43,18 @@ const PasswordForm = () => {
     showPassword: showRepeatNewPassowrd,
     toggleShowPassword: toggleShowRepeatNewPassword,
   } = useTogglePassword();
+  const [updateUser] = useMutation(UPDATE_USER);
 
   async function handleSubmit() {
-    console.log("handle submit");
-    console.log(formData);
+    try {
+      const { oldPassword, newPassword } = formData;
+      await updateUser({ variables: { input: { oldPassword, newPassword } } });
+      toast.success("Password successfully updated");
+      setShowModal(false);
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
   }
 
   return (

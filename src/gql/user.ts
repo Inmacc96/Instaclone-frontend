@@ -59,4 +59,15 @@ export const DELETE_AVATAR = gql(`#graphql
       avatar
     }
   }
-`)
+`);
+
+export const UPDATE_USER = gql(`#graphql
+  mutation updateUser($input: UserUpdateInput!){
+      updateUser(input: $input){
+          name,
+          username,
+          email,
+          password
+      }
+  }
+`);

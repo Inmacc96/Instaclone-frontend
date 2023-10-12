@@ -22,7 +22,7 @@ const SettingsForm = ({
 
   const onChangePassword = () => {
     setTitleModal("Change your password");
-    setChildrenModal(<PasswordForm />);
+    setChildrenModal(<PasswordForm setShowModal={setShowModal} />);
   };
 
   const onLogOut = () => {
@@ -33,7 +33,7 @@ const SettingsForm = ({
 
   return (
     <div className="settings-form">
-      <Button onClick={onChangePassword}>Change Password</Button>
+      <Button onClick={onChangePassword}>Change password</Button>
       <Button>Change email</Button>
       <Button>Description</Button>
       <Button>Website</Button>
