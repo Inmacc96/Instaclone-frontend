@@ -1,6 +1,9 @@
 import { Button, Form } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { ApolloError, useMutation } from "@apollo/client";
 import IconPopup from "../../IconPopup";
 import useForm from "../../../hooks/useForm";
+import { UPDATE_USER } from "../../../gql/user";
 import {
   INITIAL_ERRORS_CHANGE_WEBSITE,
   INITIAL_TOUCHED_FIELDS_CHANGE_WEBSITE,
@@ -30,8 +33,19 @@ const webSiteForm = ({ setShowModal, currentWebsite }: webSiteFormProps) => {
     VALIDATIONS_CHANGE_WEBSITE,
     handleSubmit
   );
+  const [updateUser] = useMutation(UPDATE_USER);
 
-  async function handleSubmit() {}
+  async function handleSubmit() {
+    const { website } = formData;
+    try {
+      await updateUser({ variables: { input: { website } } });
+      toast.success("Website successfully updated")
+      setShowModal(false)
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
+  }
 
   return (
     <Form className="website-form" onSubmit={onSubmit}>
