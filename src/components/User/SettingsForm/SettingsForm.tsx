@@ -42,7 +42,7 @@ const SettingsForm = ({
     setChildrenModal(
       <DescriptionForm
         setShowModal={setShowModal}
-       // currentDescription={user.description}
+        currentDescription={user.description}
       />
     );
   };

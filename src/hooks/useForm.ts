@@ -16,7 +16,9 @@ const useForm = <
   const [touchedFields, setTouchedFields] = useState<U>(initialTouched);
   const [submitForm, setSubmitForm] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };

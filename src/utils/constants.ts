@@ -7,13 +7,17 @@ import {
   ValidateSignUpForm,
 } from "../types/auth";
 import {
+  ChangeDescriptionFormData,
+  ChangeDescriptionFormTouched,
   ChangeEmailFormData,
   ChangeEmailFormTouched,
   ChangePasswordFormData,
   ChangePasswordFormTouched,
+  ValidateChangeDescription,
   ValidateChangeEmail,
   ValidateChangePassword,
 } from "../types/forms";
+import { validateDescription } from "../validations/validateChangeDescription";
 import { validateNewEmail } from "../validations/validateChangeEmail";
 import {
   validateNewPassword,
@@ -121,4 +125,16 @@ export const INITIAL_TOUCHED_FIELDS_CHANGE_EMAIL: ChangeEmailFormTouched = {
 
 export const VALIDATIONS_CHANGE_EMAIL: ValidateChangeEmail = {
   email: validateNewEmail,
+};
+
+export const INITIAL_ERRORS_CHANGE_DESCRIPTION: ChangeDescriptionFormData = {
+  description: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_DESCRIPTION: ChangeDescriptionFormTouched = {
+  description: false,
+};
+
+export const VALIDATIONS_CHANGE_DESCRIPTION: ValidateChangeDescription = {
+  description: validateDescription,
 };
