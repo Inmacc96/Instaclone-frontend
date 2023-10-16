@@ -8,6 +8,8 @@ import AvatarForm from "../AvatarForm";
 import ModalBasic from "../../Modal/ModalBasic";
 import ImageNoFound from "../../../assets/png/avatar.png";
 import "./Profile.scss";
+import HeaderProfile from "./HeaderProfile";
+import SettingsForm from "../SettingsForm";
 
 interface IProfileProps {
   username?: string;
@@ -41,12 +43,24 @@ const Profile = ({ username }: IProfileProps) => {
   const handlerModal = (type: string) => {
     switch (type) {
       case "avatar":
-        setTitleModal("Cambiar foto de perfil");
+        setTitleModal("Change profile image");
         setChildrenModal(
           <AvatarForm
             setShowModal={setShowModal}
             generateUploadUrl={generateUploadUrl}
-            userId={getUser?.id!}
+            userId={getUser?.id}
+          />
+        );
+        setShowModal(true);
+        break;
+      case "settings":
+        setTitleModal("");
+        setChildrenModal(
+          <SettingsForm
+            setShowModal={setShowModal}
+            setTitleModal={setTitleModal}
+            setChildrenModal={setChildrenModal}
+            user={getUser}
           />
         );
         setShowModal(true);
@@ -69,13 +83,13 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <div>HeaderProfile</div>
+          <HeaderProfile username={username} handlerModal={handlerModal} />
           <div>Followers</div>
           <div className="other">
-            <p className="name">{getUser!.name}</p>
-            {getUser?.siteWeb && (
-              <a href={getUser?.siteWeb} className="siteWeb" target="_blank">
-                {getUser?.siteWeb}
+            <p className="name">{getUser.name}</p>
+            {getUser?.website && (
+              <a href={getUser?.website} className="webSite" target="_blank">
+                {getUser?.website}
               </a>
             )}
             {getUser?.description && (

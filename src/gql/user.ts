@@ -27,7 +27,7 @@ export const GET_USER = gql(`#graphql
       name
       username
       email
-      siteWeb
+      website
       description
       avatar
     }
@@ -59,4 +59,15 @@ export const DELETE_AVATAR = gql(`#graphql
       avatar
     }
   }
-`)
+`);
+
+export const UPDATE_USER = gql(`#graphql
+  mutation updateUser($input: UserUpdateInput!){
+      updateUser(input: $input){
+        id
+        email
+        website
+        description
+      }
+  }
+`);

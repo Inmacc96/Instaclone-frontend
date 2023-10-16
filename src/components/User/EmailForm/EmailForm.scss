@@ -1,0 +1,10 @@
+@import "../../../scss/index.scss";
+
+.ui.form.email-form {
+  margin: 20px;
+  
+  input[type="text"] {
+    padding: 13px 15px;
+    background-color: #f9f9f9;
+  }
+}

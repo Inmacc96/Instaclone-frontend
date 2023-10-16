@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext";
-import { decodeToken, getToken } from "../utils/token";
+import { decodeToken, getToken, removeToken } from "../utils/token";
 import { User } from "../__generated__/graphql";
 import { DecodedToken } from "../types/auth";
 
@@ -24,8 +24,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setAuth(user);
   };
 
+  const logOut = () => {
+    removeToken();
+    setAuth(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, setUser }}>
+    <AuthContext.Provider value={{ auth, setUser , logOut}}>
       {children}
     </AuthContext.Provider>
   );

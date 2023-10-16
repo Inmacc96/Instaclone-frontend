@@ -1,4 +1,7 @@
-export const validateEmailLogin = (email: string) => {
+import { LogInFormData } from "../types/auth";
+
+export const validateEmailLogin = (formData: LogInFormData) => {
+  const email = formData.email;
   if (!email) {
     return "Your email is required";
   } else if (
@@ -10,7 +13,8 @@ export const validateEmailLogin = (email: string) => {
   }
 };
 
-export const validatePasswordLogin = (password: string) => {
+export const validatePasswordLogin = (formData: LogInFormData) => {
+  const password = formData.password;
   if (!password) {
     return "Password is required";
   } else {

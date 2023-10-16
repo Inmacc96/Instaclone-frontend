@@ -6,7 +6,32 @@ import {
   ValidateLogInForm,
   ValidateSignUpForm,
 } from "../types/auth";
-import { validateEmailLogin, validatePasswordLogin } from "../validations/validateLogIn";
+import {
+  ChangeDescriptionFormData,
+  ChangeDescriptionFormTouched,
+  ChangeEmailFormData,
+  ChangeEmailFormTouched,
+  ChangePasswordFormData,
+  ChangePasswordFormTouched,
+  ChangeWebsiteFormData,
+  ChangeWebsiteFormTouched,
+  ValidateChangeDescription,
+  ValidateChangeEmail,
+  ValidateChangePassword,
+  ValidateChangeWebsite,
+} from "../types/forms";
+import { validateDescription } from "../validations/validateChangeDescription";
+import { validateNewEmail } from "../validations/validateChangeEmail";
+import {
+  validateNewPassword,
+  validateOldPassword,
+  validateRepeatNewPassword,
+} from "../validations/validateChangePassword";
+import { validateWebsite } from "../validations/validateChangeWebsite";
+import {
+  validateEmailLogin,
+  validatePasswordLogin,
+} from "../validations/validateLogIn";
 import {
   validateEmail,
   validateName,
@@ -67,4 +92,66 @@ export const INITIAL_TOUCHED_FIELDS_LOGIN: LogInFormTouched = {
 export const VALIDATIONS_LOGIN: ValidateLogInForm = {
   email: validateEmailLogin,
   password: validatePasswordLogin,
+};
+
+export const INITIAL_VALUES_CHANGE_PASSWORD: ChangePasswordFormData = {
+  oldPassword: "",
+  newPassword: "",
+  repeatNewPassword: "",
+};
+
+export const INITIAL_ERRORS_CHANGE_PASSWORD: ChangePasswordFormData = {
+  oldPassword: "",
+  newPassword: "",
+  repeatNewPassword: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_PASSWORD: ChangePasswordFormTouched =
+  {
+    oldPassword: false,
+    newPassword: false,
+    repeatNewPassword: false,
+  };
+
+export const VALIDATIONS_CHANGE_PASSWORD: ValidateChangePassword = {
+  oldPassword: validateOldPassword,
+  newPassword: validateNewPassword,
+  repeatNewPassword: validateRepeatNewPassword,
+};
+
+export const INITIAL_ERRORS_CHANGE_EMAIL: ChangeEmailFormData = {
+  email: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_EMAIL: ChangeEmailFormTouched = {
+  email: false,
+};
+
+export const VALIDATIONS_CHANGE_EMAIL: ValidateChangeEmail = {
+  email: validateNewEmail,
+};
+
+export const INITIAL_ERRORS_CHANGE_DESCRIPTION: ChangeDescriptionFormData = {
+  description: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_DESCRIPTION: ChangeDescriptionFormTouched =
+  {
+    description: false,
+  };
+
+export const VALIDATIONS_CHANGE_DESCRIPTION: ValidateChangeDescription = {
+  description: validateDescription,
+};
+
+export const INITIAL_ERRORS_CHANGE_WEBSITE: ChangeWebsiteFormData = {
+  website: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_WEBSITE: ChangeWebsiteFormTouched = {
+  website: false,
+};
+
+export const VALIDATIONS_CHANGE_WEBSITE: ValidateChangeWebsite = {
+  website: validateWebsite,
 };
