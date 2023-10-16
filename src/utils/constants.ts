@@ -13,9 +13,12 @@ import {
   ChangeEmailFormTouched,
   ChangePasswordFormData,
   ChangePasswordFormTouched,
+  ChangeWebsiteFormData,
+  ChangeWebsiteFormTouched,
   ValidateChangeDescription,
   ValidateChangeEmail,
   ValidateChangePassword,
+  ValidateChangeWebsite,
 } from "../types/forms";
 import { validateDescription } from "../validations/validateChangeDescription";
 import { validateNewEmail } from "../validations/validateChangeEmail";
@@ -24,6 +27,7 @@ import {
   validateOldPassword,
   validateRepeatNewPassword,
 } from "../validations/validateChangePassword";
+import { validateWebsite } from "../validations/validateChangeWebsite";
 import {
   validateEmailLogin,
   validatePasswordLogin,
@@ -131,10 +135,23 @@ export const INITIAL_ERRORS_CHANGE_DESCRIPTION: ChangeDescriptionFormData = {
   description: "",
 };
 
-export const INITIAL_TOUCHED_FIELDS_CHANGE_DESCRIPTION: ChangeDescriptionFormTouched = {
-  description: false,
-};
+export const INITIAL_TOUCHED_FIELDS_CHANGE_DESCRIPTION: ChangeDescriptionFormTouched =
+  {
+    description: false,
+  };
 
 export const VALIDATIONS_CHANGE_DESCRIPTION: ValidateChangeDescription = {
   description: validateDescription,
+};
+
+export const INITIAL_ERRORS_CHANGE_WEBSITE: ChangeWebsiteFormData = {
+  website: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_CHANGE_WEBSITE: ChangeWebsiteFormTouched = {
+  website: false,
+};
+
+export const VALIDATIONS_CHANGE_WEBSITE: ValidateChangeWebsite = {
+  website: validateWebsite,
 };

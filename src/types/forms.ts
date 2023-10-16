@@ -37,3 +37,16 @@ export type ChangeDescriptionFormTouched = Record<
 export interface ValidateChangeDescription {
   description: (v: ChangeDescriptionFormData) => string;
 }
+
+export interface ChangeWebsiteFormData {
+  website: string;
+}
+
+export type ChangeWebsiteFormTouched = Record<
+  keyof ChangeWebsiteFormData,
+  boolean
+>;
+
+export interface ValidateChangeWebsite {
+  website: (v: ChangeWebsiteFormData) => string;
+}

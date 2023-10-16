@@ -87,9 +87,9 @@ const Profile = ({ username }: IProfileProps) => {
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser.name}</p>
-            {getUser?.siteWeb && (
-              <a href={getUser?.siteWeb} className="siteWeb" target="_blank">
-                {getUser?.siteWeb}
+            {getUser?.website && (
+              <a href={getUser?.website} className="webSite" target="_blank">
+                {getUser?.website}
               </a>
             )}
             {getUser?.description && (

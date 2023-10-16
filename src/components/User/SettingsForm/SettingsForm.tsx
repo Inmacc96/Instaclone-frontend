@@ -7,6 +7,7 @@ import PasswordForm from "../PasswordForm";
 import EmailForm from "../EmailForm";
 import { User } from "../../../__generated__/graphql";
 import DescriptionForm from "../DescriptionForm";
+import WebsiteForm from "../WebsiteForm";
 
 interface SettingsFormProps {
   setShowModal: (v: boolean) => void;
@@ -47,6 +48,13 @@ const SettingsForm = ({
     );
   };
 
+  const onChangewebSite = () => {
+    setTitleModal("Update your website");
+    setChildrenModal(
+      <WebsiteForm setShowModal={setShowModal} currentWebsite={user.website} />
+    );
+  };
+
   const onLogOut = () => {
     client.clearStore();
     logOut();
@@ -58,7 +66,7 @@ const SettingsForm = ({
       <Button onClick={onChangePassword}>Change password</Button>
       <Button onClick={onChangeEmail}>Change email</Button>
       <Button onClick={onChangeDescription}>Description</Button>
-      <Button>Website</Button>
+      <Button onClick={onChangewebSite}>Website</Button>
       <Button onClick={onLogOut}>Log out</Button>
       <Button onClick={() => setShowModal(false)}>Cancel</Button>
     </div>

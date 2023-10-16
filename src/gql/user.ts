@@ -27,7 +27,7 @@ export const GET_USER = gql(`#graphql
       name
       username
       email
-      siteWeb
+      website
       description
       avatar
     }
@@ -66,7 +66,7 @@ export const UPDATE_USER = gql(`#graphql
       updateUser(input: $input){
         id
         email
-        siteWeb
+        website
         description
       }
   }
