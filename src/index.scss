@@ -1,4 +1,4 @@
-@import "./scss//index.scss";
+@import "./scss/index.scss";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -25,5 +25,27 @@ body {
     width: 100%;
     background-color: $action;
     color: $font-light;
+  }
+}
+
+.ui.button.btn-action {
+  background-color: $action;
+  color: $font-light;
+  border-color: $action;
+
+  &:hover {
+    background-color: #0066cc;
+    border-color: #0066cc;
+  }
+}
+
+.ui.button.btn-danger {
+  background-color: $danger;
+  color: $font-light;
+  border-color: $danger;
+
+  &:hover {
+    background-color: #cc3333;
+    border-color: #cc3333;
   }
 }

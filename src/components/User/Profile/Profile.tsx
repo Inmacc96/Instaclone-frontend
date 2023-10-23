@@ -83,7 +83,7 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <HeaderProfile username={username} handlerModal={handlerModal} />
+          <HeaderProfile username={getUser.username} handlerModal={handlerModal} />
           <div>Followers</div>
           <div className="other">
             <p className="name">{getUser.name}</p>
