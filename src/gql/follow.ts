@@ -5,3 +5,9 @@ export const IS_FOLLOWING = gql(`#graphql
         isFollowing(username: $username)
     }
 `);
+
+export const FOLLOW_USER = gql(`#graphql
+    mutation followUser($username: String!){
+        follow(username: $username)
+    }
+`);

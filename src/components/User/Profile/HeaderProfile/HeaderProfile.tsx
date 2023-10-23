@@ -1,7 +1,8 @@
 import { Button } from "semantic-ui-react";
-import { useQuery } from "@apollo/client";
+import { toast } from "react-toastify";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import useAuth from "../../../../hooks/useAuth";
-import { IS_FOLLOWING } from "../../../../gql/follow";
+import { FOLLOW_USER, IS_FOLLOWING } from "../../../../gql/follow";
 import "./HeaderProfile.scss";
 
 interface HeaderProfileProps {
@@ -14,6 +15,17 @@ const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
   const { loading, data } = useQuery(IS_FOLLOWING, {
     variables: { username },
   });
+  const [followUser] = useMutation(FOLLOW_USER, {
+    update(cache) {
+      cache.writeQuery({
+        query: IS_FOLLOWING,
+        variables: { username },
+        data: {
+          isFollowing: true,
+        },
+      });
+    },
+  });
 
   const buttonFollow = () => {
     if (data?.isFollowing) {
@@ -24,10 +36,19 @@ const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
       );
     }
     return (
-      <Button className="btn-action" onClick={() => console.log("follow")}>
+      <Button className="btn-action" onClick={onFollow}>
         Follow
       </Button>
     );
+  };
+
+  const onFollow = async () => {
+    try {
+      await followUser({ variables: { username } });
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
   };
 
   return (
