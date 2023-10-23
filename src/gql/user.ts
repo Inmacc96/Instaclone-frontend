@@ -71,3 +71,14 @@ export const UPDATE_USER = gql(`#graphql
       }
   }
 `);
+
+export const SEARCH_USERS = gql(`#graphql
+  query searchUsers($search: String!) {
+    searchUsers(search: $search) {
+      id
+      name
+      username
+      avatar
+    }
+  }
+`);

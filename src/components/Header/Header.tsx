@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Container, Grid, Image } from "semantic-ui-react";
 import RightHeader from "./RightHeader/RightHeader";
+import Search from "./Search";
 import Logo from "../../assets/png/instaclone.png";
 import "./Header.scss";
 
@@ -15,10 +16,10 @@ const Header = () => {
             </Link>
           </Grid.Column>
           <Grid.Column width={10}>
-            <p>buscador</p>
+            <Search />
           </Grid.Column>
           <Grid.Column width={3}>
-           <RightHeader />
+            <RightHeader />
           </Grid.Column>
         </Grid>
       </Container>

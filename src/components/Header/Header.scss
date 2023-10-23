@@ -7,6 +7,10 @@
   background-color: $background-light;
   z-index: 1;
 
+  .ui.grid {
+    align-items: center;
+  }
+
   &__logo {
     img {
       height: 25px;
