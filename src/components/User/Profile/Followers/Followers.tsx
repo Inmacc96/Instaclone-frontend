@@ -33,10 +33,18 @@ const Followers = ({ username }: FollowersProps) => {
 
   const openFollowers = () => {
     setTitleModal("Followers");
-    setShowModal(true);
     setChildrenModal(
       <UsersList users={getFollowers} setShowModal={setShowModal} />
     );
+    setShowModal(true);
+  };
+
+  const openFollowings = () => {
+    setTitleModal("Followings");
+    setChildrenModal(
+      <UsersList users={getFollowings} setShowModal={setShowModal} />
+    );
+    setShowModal(true);
   };
 
   return (
@@ -48,7 +56,7 @@ const Followers = ({ username }: FollowersProps) => {
         <p className="link" onClick={openFollowers}>
           <span>{getFollowers.length}</span> followers
         </p>
-        <p className="link">
+        <p className="link" onClick={openFollowings}>
           <span>{getFollowings.length}</span> followings
         </p>
       </div>
