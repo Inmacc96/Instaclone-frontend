@@ -28,3 +28,14 @@ export const GET_FOLLOWERS = gql(`#graphql
         }
     }
 `);
+
+export const GET_FOLLOWINGS = gql(`#graphql
+    query getFollowings($username: String!){
+        getFollowings(username: $username){
+            id
+            name
+            username
+            avatar
+        }
+    }
+`);

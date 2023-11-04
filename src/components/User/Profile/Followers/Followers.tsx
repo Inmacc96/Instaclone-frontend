@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FOLLOWERS } from "../../../../gql/follow";
+import { GET_FOLLOWERS, GET_FOLLOWINGS } from "../../../../gql/follow";
 import ModalBasic from "../../../Modal/ModalBasic";
 import "./Followers.scss";
 import UsersList from "../../UsersList";
@@ -19,10 +19,17 @@ const Followers = ({ username }: FollowersProps) => {
       variables: { username },
     }
   );
+  const { data: dataFollowings, loading: loadingFollowings } = useQuery(
+    GET_FOLLOWINGS,
+    {
+      variables: { username },
+    }
+  );
 
-  if (loadingFollowers) return null;
+  if (loadingFollowers || loadingFollowings) return null;
 
   const { getFollowers } = dataFollowers!;
+  const { getFollowings } = dataFollowings!;
 
   const openFollowers = () => {
     setTitleModal("Followers");
@@ -42,7 +49,7 @@ const Followers = ({ username }: FollowersProps) => {
           <span>{getFollowers.length}</span> followers
         </p>
         <p className="link">
-          <span>240</span> followings
+          <span>{getFollowings.length}</span> followings
         </p>
       </div>
       <ModalBasic show={showModal} setShow={setShowModal} title={titleModal}>
