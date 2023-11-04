@@ -2,7 +2,11 @@ import { Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import useAuth from "../../../../hooks/useAuth";
-import { FOLLOW_USER, IS_FOLLOWING } from "../../../../gql/follow";
+import {
+  FOLLOW_USER,
+  IS_FOLLOWING,
+  UNFOLLOW_USER,
+} from "../../../../gql/follow";
 import "./HeaderProfile.scss";
 
 interface HeaderProfileProps {
@@ -27,10 +31,22 @@ const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
     },
   });
 
+  const [unFollowUser] = useMutation(UNFOLLOW_USER, {
+    update(cache) {
+      cache.writeQuery({
+        query: IS_FOLLOWING,
+        variables: { username },
+        data: {
+          isFollowing: false,
+        },
+      });
+    },
+  });
+
   const buttonFollow = () => {
     if (data?.isFollowing) {
       return (
-        <Button className="btn-danger" onClick={() => console.log("unfollow")}>
+        <Button className="btn-danger" onClick={onUnFollow}>
           Unfollow
         </Button>
       );
@@ -45,6 +61,15 @@ const HeaderProfile = ({ username, handlerModal }: HeaderProfileProps) => {
   const onFollow = async () => {
     try {
       await followUser({ variables: { username } });
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
+  };
+
+  const onUnFollow = async () => {
+    try {
+      await unFollowUser({ variables: { username } });
     } catch (error) {
       const err = error as ApolloError;
       toast.error(err.message);
