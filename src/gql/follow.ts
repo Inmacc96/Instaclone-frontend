@@ -24,7 +24,6 @@ export const GET_FOLLOWERS = gql(`#graphql
             id
             name
             username
-            email
             avatar
         }
     }

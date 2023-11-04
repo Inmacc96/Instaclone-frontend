@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_FOLLOWERS } from "../../../../gql/follow";
 import ModalBasic from "../../../Modal/ModalBasic";
 import "./Followers.scss";
+import UsersList from "../../UsersList";
 
 interface FollowersProps {
   username: string;
@@ -19,19 +20,18 @@ const Followers = ({ username }: FollowersProps) => {
     }
   );
 
+  if (loadingFollowers) return null;
+
+  const { getFollowers } = dataFollowers!;
+
   const openFollowers = () => {
     setTitleModal("Followers");
     setShowModal(true);
     setChildrenModal(
-      <div>
-        <h3>Lista de seguidore</h3>
-      </div>
+      <UsersList users={getFollowers} setShowModal={setShowModal} />
     );
   };
 
-  if (loadingFollowers) return null;
-
-  const { getFollowers } = dataFollowers!;
   return (
     <>
       <div className="followers">
