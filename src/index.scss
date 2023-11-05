@@ -28,7 +28,8 @@ body {
   }
 }
 
-.ui.button.btn-action {
+.ui.button.btn-action,
+.ui.button.btn-action:focus {
   background-color: $action;
   color: $font-light;
   border-color: $action;
@@ -39,7 +40,8 @@ body {
   }
 }
 
-.ui.button.btn-danger {
+.ui.button.btn-danger,
+.ui.button.btn-danger:focus {
   background-color: $danger;
   color: $font-light;
   border-color: $danger;
