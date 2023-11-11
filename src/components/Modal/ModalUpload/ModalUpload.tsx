@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Icon, Modal } from "semantic-ui-react";
+import { UploadedFile } from "../../../types/UploadedFile";
 import "./ModalUpload.scss";
 
 interface IModalUploadProps {
@@ -9,9 +10,15 @@ interface IModalUploadProps {
 }
 
 const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
+  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
+
   const onDrop = useCallback(async (acceptedFile: File[]) => {
     const file = acceptedFile[0];
-    console.log(acceptedFile);
+    setUploadedFile({
+      type: "image",
+      file,
+      preview: URL.createObjectURL(file),
+    });
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -21,16 +28,27 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
     onDrop,
   });
   return (
-    <Modal
-      open={show}
-      onClose={() => setShow(false)}
-      className="modal-upload"
-    >
-      <div {...getRootProps()} className="dropzone">
-        <Icon name="cloud upload" />
-        <p>Select or drag your photo to be published</p>
+    <Modal open={show} onClose={() => setShow(false)} className="modal-upload">
+      <div
+        {...getRootProps()}
+        className="dropzone"
+        style={uploadedFile ? { border: 0 } : {}}
+      >
+        {!uploadedFile && (
+          <>
+            <Icon name="cloud upload" />
+            <p>Select or drag your photo to be published</p>
+          </>
+        )}
         <input {...getInputProps()} />
       </div>
+
+      {uploadedFile?.type === "image" && (
+        <div
+          className="image"
+          style={{ backgroundImage: `url("${uploadedFile.preview}")` }}
+        />
+      )}
     </Modal>
   );
 };
