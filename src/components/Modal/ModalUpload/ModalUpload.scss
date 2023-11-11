@@ -1,4 +1,29 @@
 @import "../../../scss/index.scss";
 
-.modal-upload {
+.ui.modal.modal-upload {
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 8px;
+  width: 650px;
+  height: 650px;
+
+  .dropzone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed $border-dark;
+    border-radius: 16px !important;
+
+    i {
+      font-size: 50px;
+      color: $font-grey;
+    }
+
+    p {
+      margin-top: 16px;
+    }
+  }
 }
