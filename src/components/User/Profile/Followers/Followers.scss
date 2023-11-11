@@ -1,0 +1,18 @@
+@import "../../../../scss/index.scss";
+
+.followers {
+  display: flex;
+  gap: 50px;
+
+  p {
+    font-size: 16px;
+
+    &.link:hover {
+      cursor: pointer;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  }
+}

@@ -10,6 +10,7 @@ import ImageNoFound from "../../../assets/png/avatar.png";
 import "./Profile.scss";
 import HeaderProfile from "./HeaderProfile";
 import SettingsForm from "../SettingsForm";
+import Followers from "./Followers";
 
 interface IProfileProps {
   username?: string;
@@ -83,8 +84,11 @@ const Profile = ({ username }: IProfileProps) => {
           />
         </Grid.Column>
         <Grid.Column width={11} className="profile__right">
-          <HeaderProfile username={username} handlerModal={handlerModal} />
-          <div>Followers</div>
+          <HeaderProfile
+            username={getUser.username}
+            handlerModal={handlerModal}
+          />
+          <Followers username={getUser.username} />
           <div className="other">
             <p className="name">{getUser.name}</p>
             {getUser?.website && (
