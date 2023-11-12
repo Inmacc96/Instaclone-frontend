@@ -11,6 +11,7 @@ import "./Profile.scss";
 import HeaderProfile from "./HeaderProfile";
 import SettingsForm from "../SettingsForm";
 import Followers from "./Followers";
+import { UploadType } from "../../../__generated__/graphql";
 
 interface IProfileProps {
   username?: string;
@@ -33,7 +34,9 @@ const Profile = ({ username }: IProfileProps) => {
     data: uploadUrlData,
     loading: uploadUrlLoading,
     error: uploadUrlError,
-  } = useQuery(GENERATE_UPLOAD_URL, { variables: { folder } });
+  } = useQuery(GENERATE_UPLOAD_URL, {
+    variables: { folder, uploadType: UploadType.Avatar },
+  });
 
   if (userLoading || uploadUrlLoading) return null;
   if (userError || uploadUrlError) return <UserNotFound />;

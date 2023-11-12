@@ -8,6 +8,7 @@ import { GENERATE_UPLOAD_URL } from "../../../gql/user";
 import { ResponseCloudinary } from "../../../types/responseCloudinary";
 import { UploadedFile } from "../../../types/UploadedFile";
 import "./ModalUpload.scss";
+import { UploadType } from "../../../__generated__/graphql";
 
 interface IModalUploadProps {
   show: boolean;
@@ -20,7 +21,9 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
     data: uploadUrlData,
     loading: uploadUrlLoading,
     error: uploadUrlError,
-  } = useQuery(GENERATE_UPLOAD_URL, { variables: { folder } });
+  } = useQuery(GENERATE_UPLOAD_URL, {
+    variables: { folder, uploadType: UploadType.Post },
+  });
   const [publish] = useMutation(PUBLISH);
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [isLoading, setIsLoading] = useState(false);

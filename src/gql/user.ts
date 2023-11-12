@@ -35,8 +35,8 @@ export const GET_USER = gql(`#graphql
 `);
 
 export const GENERATE_UPLOAD_URL = gql(`#graphql
-  query generateUploadUrl($folder: String) { 
-    generateUploadUrl(folder: $folder) {
+  query generateUploadUrl($folder: String!, $uploadType: UploadType!) { 
+    generateUploadUrl(folder: $folder, uploadType: $uploadType) {
       timestamp
       signature
       public_id
