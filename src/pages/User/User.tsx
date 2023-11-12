@@ -16,6 +16,7 @@ const User = () => {
   return (
     <div>
       <Profile username={username} totalPosts={getPosts.length} />
+      <Posts posts={getPosts} />
     </div>
   );
 };
