@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import { Button, Dimmer, Icon, Loader, Modal } from "semantic-ui-react";
 import { useMutation, useQuery } from "@apollo/client";
-import { PUBLISH } from "../../../gql/post";
+import { GET_POSTS, PUBLISH } from "../../../gql/post";
 import { GENERATE_UPLOAD_URL } from "../../../gql/user";
 import { ResponseCloudinary } from "../../../types/responseCloudinary";
 import { UploadedFile } from "../../../types/UploadedFile";
@@ -17,6 +18,7 @@ interface IModalUploadProps {
 const folder = "posts";
 
 const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
+  const { username } = useParams();
   const {
     data: uploadUrlData,
     loading: uploadUrlLoading,
@@ -24,7 +26,25 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
   } = useQuery(GENERATE_UPLOAD_URL, {
     variables: { folder, uploadType: UploadType.Post },
   });
-  const [publish] = useMutation(PUBLISH);
+  const [publish] = useMutation(PUBLISH, {
+    update(cache, { data }) {
+      const newPost = data?.publish;
+      const getPostsQuery = cache.readQuery({
+        query: GET_POSTS,
+        variables: { username: username ?? "" },
+      });
+
+      if (getPostsQuery?.getPosts && newPost) {
+        cache.writeQuery({
+          query: GET_POSTS,
+          variables: { username: username ?? "" },
+          data: {
+            getPosts: [...getPostsQuery.getPosts, newPost],
+          },
+        });
+      }
+    },
+  });
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

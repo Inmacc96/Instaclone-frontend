@@ -15,10 +15,11 @@ import { UploadType } from "../../../__generated__/graphql";
 
 interface IProfileProps {
   username?: string;
+  totalPosts: number;
 }
 const folder = "avatar";
 
-const Profile = ({ username }: IProfileProps) => {
+const Profile = ({ username, totalPosts }: IProfileProps) => {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState("");
   const [childrenModal, setChildrenModal] = useState<JSX.Element | null>(null);
@@ -90,7 +91,7 @@ const Profile = ({ username }: IProfileProps) => {
             username={getUser.username}
             handlerModal={handlerModal}
           />
-          <Followers username={getUser.username} />
+          <Followers username={getUser.username} totalPosts={totalPosts} />
           <div className="other">
             <p className="name">{getUser.name}</p>
             {getUser?.website && (
