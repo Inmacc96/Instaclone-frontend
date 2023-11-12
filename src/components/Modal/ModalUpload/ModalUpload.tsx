@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Button, Icon, Modal } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { Button, Dimmer, Icon, Loader, Modal } from "semantic-ui-react";
+import { useMutation, useQuery } from "@apollo/client";
+import { PUBLISH } from "../../../gql/post";
+import { GENERATE_UPLOAD_URL } from "../../../gql/user";
+import { ResponseCloudinary } from "../../../types/responseCloudinary";
 import { UploadedFile } from "../../../types/UploadedFile";
 import "./ModalUpload.scss";
-import { GENERATE_UPLOAD_URL } from "../../../gql/user";
-import { useMutation, useQuery } from "@apollo/client";
-import { ResponseCloudinary } from "../../../types/responseCloudinary";
-import { toast } from "react-toastify";
-import { PUBLISH } from "../../../gql/post";
 
 interface IModalUploadProps {
   show: boolean;
@@ -23,6 +23,7 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
   } = useQuery(GENERATE_UPLOAD_URL, { variables: { folder } });
   const [publish] = useMutation(PUBLISH);
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onDrop = useCallback(async (acceptedFile: File[]) => {
     const file = acceptedFile[0];
@@ -39,6 +40,15 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
     multiple: false,
     onDrop,
   });
+
+  const onClose = () => {
+    setIsLoading(false);
+    if (uploadedFile) {
+      URL.revokeObjectURL(uploadedFile.preview);
+    }
+    setUploadedFile(null);
+    setShow(false);
+  };
 
   if (uploadUrlLoading || uploadUrlError) return null;
 
@@ -57,6 +67,7 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
       formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
 
       try {
+        setIsLoading(true);
         const uploadResponse = await fetch(
           `https://api.cloudinary.com/v1_1/${
             import.meta.env.VITE_CLOUDINARY_NAME
@@ -74,12 +85,14 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
       } catch (err) {
         toast.warning("Error publishing post");
         console.error("Error uploading post:", err);
+      } finally {
+        onClose();
       }
     }
   };
 
   return (
-    <Modal open={show} onClose={() => setShow(false)} className="modal-upload">
+    <Modal open={show} onClose={onClose} className="modal-upload">
       <div
         {...getRootProps()}
         className="dropzone"
@@ -105,6 +118,14 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
         <Button className="btn-upload btn-action" onClick={onPublish}>
           Publish
         </Button>
+      )}
+
+      {isLoading && (
+        <Dimmer active className="publishing">
+          {/* Oscurece el contenedor padre */}
+          <Loader />
+          <p>Publishing...</p>
+        </Dimmer>
       )}
     </Modal>
   );
