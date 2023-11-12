@@ -11,12 +11,10 @@ import { toast } from "react-toastify";
 interface IAvatarForm {
   setShowModal: (v: boolean) => void;
   generateUploadUrl: UploadUrl;
-  userId: string;
 }
 const AvatarForm = ({
   setShowModal,
   generateUploadUrl,
-  userId,
 }: IAvatarForm) => {
   const [updateAvatar] = useMutation(UPDATE_AVATAR);
   const [deleteAvatar] = useMutation(DELETE_AVATAR);
@@ -25,12 +23,12 @@ const AvatarForm = ({
   const onDrop = useCallback(async (acceptedFile: File[]) => {
     const file = acceptedFile[0];
 
-    const { signature, timestamp } = generateUploadUrl;
+    const { signature, timestamp, public_id } = generateUploadUrl;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("folder", "instaclone/avatar");
     formData.append("allowed_formats", ["png", "jpeg"].toString());
-    formData.append("public_id", userId);
+    formData.append("public_id", public_id);
     formData.append("timestamp", timestamp.toString());
     formData.append("signature", signature);
     formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);

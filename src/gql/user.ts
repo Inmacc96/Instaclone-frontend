@@ -39,6 +39,7 @@ export const GENERATE_UPLOAD_URL = gql(`#graphql
     generateUploadUrl(folder: $folder) {
       timestamp
       signature
+      public_id
     }
   }
 `);

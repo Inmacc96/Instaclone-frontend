@@ -49,7 +49,6 @@ const Profile = ({ username }: IProfileProps) => {
           <AvatarForm
             setShowModal={setShowModal}
             generateUploadUrl={generateUploadUrl}
-            userId={getUser?.id}
           />
         );
         setShowModal(true);
