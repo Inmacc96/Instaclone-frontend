@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../gql/post";
 import Profile from "../../components/User/Profile";
+import Posts from "../../components/Posts";
 
 const User = () => {
   const { username } = useParams();

@@ -1,5 +1,6 @@
 import { Grid } from "semantic-ui-react";
 import { Post } from "../../__generated__/graphql";
+import PreviewPost from "./PreviewPost";
 import "./Posts.scss";
 
 interface PostsProps {
@@ -12,7 +13,9 @@ const Posts = ({ posts }: PostsProps) => {
       <h1>Posts</h1>
       <Grid columns={4}>
         {posts.map((post) => (
-          <Grid.Column key={post.id}>{post.id}</Grid.Column>
+          <Grid.Column key={post.id}>
+            <PreviewPost post={post} />
+          </Grid.Column>
         ))}
       </Grid>
     </div>
