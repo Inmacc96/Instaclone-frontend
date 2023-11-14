@@ -1,6 +1,7 @@
 import { Modal, Grid } from "semantic-ui-react";
-import "./ModalPost.scss";
+import CommentForm from "./CommentForm";
 import { Post } from "../../../__generated__/graphql";
+import "./ModalPost.scss";
 
 interface IModalPostProps {
   show: boolean;
@@ -20,7 +21,9 @@ const ModalPost = ({ show, setShow, post }: IModalPostProps) => {
         />
 
         <Grid.Column className="modal-post__right" width={6}>
-          <h3>comments</h3>
+          <div>Comentarios</div>
+          <div>Actions</div>
+          <CommentForm />
         </Grid.Column>
       </Grid>
     </Modal>
