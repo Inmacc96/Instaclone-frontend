@@ -11,13 +11,15 @@ import "./Profile.scss";
 import HeaderProfile from "./HeaderProfile";
 import SettingsForm from "../SettingsForm";
 import Followers from "./Followers";
+import { UploadType } from "../../../__generated__/graphql";
 
 interface IProfileProps {
   username?: string;
+  totalPosts: number;
 }
 const folder = "avatar";
 
-const Profile = ({ username }: IProfileProps) => {
+const Profile = ({ username, totalPosts }: IProfileProps) => {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState("");
   const [childrenModal, setChildrenModal] = useState<JSX.Element | null>(null);
@@ -33,7 +35,9 @@ const Profile = ({ username }: IProfileProps) => {
     data: uploadUrlData,
     loading: uploadUrlLoading,
     error: uploadUrlError,
-  } = useQuery(GENERATE_UPLOAD_URL, { variables: { folder } });
+  } = useQuery(GENERATE_UPLOAD_URL, {
+    variables: { folder, uploadType: UploadType.Avatar },
+  });
 
   if (userLoading || uploadUrlLoading) return null;
   if (userError || uploadUrlError) return <UserNotFound />;
@@ -49,7 +53,6 @@ const Profile = ({ username }: IProfileProps) => {
           <AvatarForm
             setShowModal={setShowModal}
             generateUploadUrl={generateUploadUrl}
-            userId={getUser?.id}
           />
         );
         setShowModal(true);
@@ -88,7 +91,7 @@ const Profile = ({ username }: IProfileProps) => {
             username={getUser.username}
             handlerModal={handlerModal}
           />
-          <Followers username={getUser.username} />
+          <Followers username={getUser.username} totalPosts={totalPosts} />
           <div className="other">
             <p className="name">{getUser.name}</p>
             {getUser?.website && (

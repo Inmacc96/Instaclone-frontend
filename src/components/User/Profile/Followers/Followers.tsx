@@ -7,9 +7,10 @@ import UsersList from "../../UsersList";
 
 interface FollowersProps {
   username: string;
+  totalPosts: number;
 }
 
-const Followers = ({ username }: FollowersProps) => {
+const Followers = ({ username, totalPosts }: FollowersProps) => {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState("");
   const [childrenModal, setChildrenModal] = useState<JSX.Element | null>(null);
@@ -51,7 +52,7 @@ const Followers = ({ username }: FollowersProps) => {
     <>
       <div className="followers">
         <p>
-          <span>50</span> posts
+          <span>{totalPosts}</span> posts
         </p>
         <p className="link" onClick={openFollowers}>
           <span>{getFollowers.length}</span> followers
