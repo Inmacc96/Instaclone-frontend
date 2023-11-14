@@ -39,7 +39,7 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
           query: GET_POSTS,
           variables: { username: username ?? "" },
           data: {
-            getPosts: [...getPostsQuery.getPosts, newPost],
+            getPosts: [newPost, ...getPostsQuery.getPosts],
           },
         });
       }
