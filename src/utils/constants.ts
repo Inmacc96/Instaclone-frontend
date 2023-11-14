@@ -7,6 +7,7 @@ import {
   ValidateSignUpForm,
 } from "../types/auth";
 import {
+  AddCommentFormData,
   ChangeDescriptionFormData,
   ChangeDescriptionFormTouched,
   ChangeEmailFormData,
@@ -15,6 +16,7 @@ import {
   ChangePasswordFormTouched,
   ChangeWebsiteFormData,
   ChangeWebsiteFormTouched,
+  ValidateAddComment,
   ValidateChangeDescription,
   ValidateChangeEmail,
   ValidateChangePassword,
@@ -28,6 +30,7 @@ import {
   validateRepeatNewPassword,
 } from "../validations/validateChangePassword";
 import { validateWebsite } from "../validations/validateChangeWebsite";
+import { AddCommentFormTouched } from "../types/forms";
 import {
   validateEmailLogin,
   validatePasswordLogin,
@@ -39,6 +42,7 @@ import {
   validateRepeatPassword,
   validateUsername,
 } from "../validations/validateSignUp";
+import { validateComment } from "../validations/validateAddComment";
 
 export const TOKEN = "token";
 
@@ -154,4 +158,16 @@ export const INITIAL_TOUCHED_FIELDS_CHANGE_WEBSITE: ChangeWebsiteFormTouched = {
 
 export const VALIDATIONS_CHANGE_WEBSITE: ValidateChangeWebsite = {
   website: validateWebsite,
+};
+
+export const INITIAL_ERRORS_ADD_COMMENT: AddCommentFormData = {
+  comment: "",
+};
+
+export const INITIAL_TOUCHED_FIELDS_ADD_COMMENT: AddCommentFormTouched = {
+  comment: false,
+};
+
+export const VALIDATIONS_ADD_COMMENT: ValidateAddComment = {
+  comment: validateComment,
 };
