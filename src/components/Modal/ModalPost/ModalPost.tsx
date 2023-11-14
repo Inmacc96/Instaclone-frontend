@@ -13,9 +13,12 @@ const ModalPost = ({ show, setShow, post }: IModalPostProps) => {
   return (
     <Modal open={show} onClose={onClose} className="modal-post">
       <Grid>
-        <Grid.Column className="modal-post__left" width={10}>
-          <h3>image</h3>
-        </Grid.Column>
+        <Grid.Column
+          className="modal-post__left"
+          width={10}
+          style={{ backgroundImage: `url("${post.urlFile}")` }}
+        />
+
         <Grid.Column className="modal-post__right" width={6}>
           <h3>comments</h3>
         </Grid.Column>
