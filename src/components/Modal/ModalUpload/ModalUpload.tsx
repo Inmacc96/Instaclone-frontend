@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import { Button, Dimmer, Icon, Loader, Modal } from "semantic-ui-react";
 import { useMutation, useQuery } from "@apollo/client";
+import useAuth from "../../../hooks/useAuth";
 import { GET_POSTS, PUBLISH } from "../../../gql/post";
 import { GENERATE_UPLOAD_URL } from "../../../gql/user";
 import { ResponseCloudinary } from "../../../types/responseCloudinary";
@@ -18,7 +18,7 @@ interface IModalUploadProps {
 const folder = "posts";
 
 const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
-  const { username } = useParams();
+  const { auth } = useAuth();
   const {
     data: uploadUrlData,
     loading: uploadUrlLoading,
@@ -31,13 +31,13 @@ const ModalUpload = ({ show, setShow }: IModalUploadProps) => {
       const newPost = data?.publish;
       const getPostsQuery = cache.readQuery({
         query: GET_POSTS,
-        variables: { username: username ?? "" },
+        variables: { username: auth?.username ?? "" },
       });
 
       if (getPostsQuery?.getPosts && newPost) {
         cache.writeQuery({
           query: GET_POSTS,
-          variables: { username: username ?? "" },
+          variables: { username: auth?.username ?? "" },
           data: {
             getPosts: [newPost, ...getPostsQuery.getPosts],
           },
