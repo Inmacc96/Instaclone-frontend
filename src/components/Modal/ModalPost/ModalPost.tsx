@@ -23,7 +23,7 @@ const ModalPost = ({ show, setShow, post }: IModalPostProps) => {
         <Grid.Column className="modal-post__right" width={6}>
           <div>Comentarios</div>
           <div>Actions</div>
-          <CommentForm />
+          <CommentForm idPost={post.id} />
         </Grid.Column>
       </Grid>
     </Modal>
