@@ -2,7 +2,7 @@ import { Form, Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import useForm from "../../../../hooks/useForm";
 import { ApolloError, useMutation } from "@apollo/client";
-import { ADD_COMMENT } from "../../../../gql/comment";
+import { ADD_COMMENT, GET_COMMENTS } from "../../../../gql/comment";
 import {
   INITIAL_ERRORS_ADD_COMMENT,
   INITIAL_TOUCHED_FIELDS_ADD_COMMENT,
@@ -29,7 +29,25 @@ const CommentForm = ({ idPost }: ICommentFormProps) => {
     VALIDATIONS_ADD_COMMENT,
     handleSubmit
   );
-  const [addComment] = useMutation(ADD_COMMENT);
+  const [addComment] = useMutation(ADD_COMMENT, {
+    update: (cache, { data }) => {
+      const newComment = data?.addComment;
+      const getCommentsQuery = cache.readQuery({
+        query: GET_COMMENTS,
+        variables: { idPost },
+      });
+
+      if (getCommentsQuery?.getComments && newComment) {
+        cache.writeQuery({
+          query: GET_COMMENTS,
+          variables: { idPost },
+          data: {
+            getComments: [...getCommentsQuery?.getComments, newComment],
+          },
+        });
+      }
+    },
+  });
 
   async function handleSubmit() {
     const { comment } = formData;

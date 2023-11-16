@@ -4,8 +4,9 @@ export const ADD_COMMENT = gql(`#graphql
     mutation addComment($input: CommentInput!) {
         addComment(input: $input) {
           id
-          idPost { 
-            id
+          idUser {
+            username
+            avatar
           }
           comment
         }
