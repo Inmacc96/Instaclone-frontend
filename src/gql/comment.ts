@@ -1,13 +1,24 @@
 import { gql } from "../__generated__";
 
 export const ADD_COMMENT = gql(`#graphql
-    mutation addComent($input: CommentInput!) {
+    mutation addComment($input: CommentInput!) {
         addComment(input: $input) {
-        id
-        idPost
-        idUser
-        comment
-        createdAt
+          idPost { 
+            id
+          }
+          comment
         }
   }
+`);
+
+export const GET_COMMENTS = gql(`#graphql
+    query getComments($idPost: ID!){
+      getComments(idPost: $idPost){
+        idUser{
+          username
+          avatar
+        }
+        comment
+      }
+}
 `);
