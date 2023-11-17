@@ -5,3 +5,9 @@ export const LIKE = gql(`#graphql
         like(idPost: $idPost)
     }
 `)
+
+export const IS_LIKE = gql(`#graphql
+    query isLike($idPost: ID!){
+        isLike(idPost: $idPost)
+    }
+`)

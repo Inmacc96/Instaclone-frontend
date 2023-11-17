@@ -1,7 +1,7 @@
 import { Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
-import { ApolloError, useMutation } from "@apollo/client";
-import { LIKE } from "../../../../gql/like";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { IS_LIKE, LIKE } from "../../../../gql/like";
 import "./Actions.scss";
 
 interface IActionsProps {
@@ -9,7 +9,18 @@ interface IActionsProps {
 }
 
 const Actions = ({ idPost }: IActionsProps) => {
-  const [like] = useMutation(LIKE);
+  const { loading, error, data } = useQuery(IS_LIKE, { variables: { idPost } });
+  const [like] = useMutation(LIKE, {
+    update: (cache) => {
+      cache.writeQuery({
+        query: IS_LIKE,
+        variables: { idPost },
+        data: {
+          isLike: true,
+        },
+      });
+    },
+  });
 
   const onLike = async () => {
     try {
@@ -20,9 +31,17 @@ const Actions = ({ idPost }: IActionsProps) => {
     }
   };
 
+  if (loading || error) return null;
+
+  const { isLike } = data!;
+
   return (
     <div className="actions">
-      <Icon className="like" name="heart" onClick={onLike} />
+      <Icon
+        className={isLike ? "like active" : "like"}
+        name={isLike ? "heart" : "heart outline"}
+        onClick={onLike}
+      />
       27 likes
     </div>
   );
