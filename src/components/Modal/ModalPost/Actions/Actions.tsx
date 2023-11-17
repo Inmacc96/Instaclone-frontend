@@ -1,7 +1,7 @@
 import { Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { IS_LIKE, LIKE } from "../../../../gql/like";
+import { DISLIKE, IS_LIKE, LIKE } from "../../../../gql/like";
 import "./Actions.scss";
 
 interface IActionsProps {
@@ -21,10 +21,30 @@ const Actions = ({ idPost }: IActionsProps) => {
       });
     },
   });
+  const [dislike] = useMutation(DISLIKE, {
+    update: (cache) => {
+      cache.writeQuery({
+        query: IS_LIKE,
+        variables: { idPost },
+        data: {
+          isLike: false,
+        },
+      });
+    },
+  });
 
   const onLike = async () => {
     try {
       await like({ variables: { idPost } });
+    } catch (error) {
+      const err = error as ApolloError;
+      toast.error(err.message);
+    }
+  };
+
+  const onDislike = async () => {
+    try {
+      await dislike({ variables: { idPost } });
     } catch (error) {
       const err = error as ApolloError;
       toast.error(err.message);
@@ -40,7 +60,7 @@ const Actions = ({ idPost }: IActionsProps) => {
       <Icon
         className={isLike ? "like active" : "like"}
         name={isLike ? "heart" : "heart outline"}
-        onClick={onLike}
+        onClick={isLike ? onDislike : onLike}
       />
       27 likes
     </div>
