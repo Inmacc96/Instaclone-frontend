@@ -1,7 +1,7 @@
 import { Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { DISLIKE, IS_LIKE, LIKE } from "../../../../gql/like";
+import { COUNT_LIKES, DISLIKE, IS_LIKE, LIKE } from "../../../../gql/like";
 import "./Actions.scss";
 
 interface IActionsProps {
@@ -10,6 +10,11 @@ interface IActionsProps {
 
 const Actions = ({ idPost }: IActionsProps) => {
   const { loading, error, data } = useQuery(IS_LIKE, { variables: { idPost } });
+  const {
+    loading: loadingCountLikes,
+    error: errorCountLikes,
+    data: dataCountLikes,
+  } = useQuery(COUNT_LIKES, { variables: { idPost } });
   const [like] = useMutation(LIKE, {
     update: (cache) => {
       cache.writeQuery({
@@ -19,6 +24,24 @@ const Actions = ({ idPost }: IActionsProps) => {
           isLike: true,
         },
       });
+
+      const countLikesQuery = cache.readQuery({
+        query: COUNT_LIKES,
+        variables: { idPost },
+      });
+
+      if (
+        countLikesQuery?.countLikes !== undefined &&
+        countLikesQuery?.countLikes !== null
+      ) {
+        cache.writeQuery({
+          query: COUNT_LIKES,
+          variables: { idPost },
+          data: {
+            countLikes: countLikesQuery.countLikes + 1,
+          },
+        });
+      }
     },
   });
   const [dislike] = useMutation(DISLIKE, {
@@ -30,6 +53,24 @@ const Actions = ({ idPost }: IActionsProps) => {
           isLike: false,
         },
       });
+
+      const countLikesQuery = cache.readQuery({
+        query: COUNT_LIKES,
+        variables: { idPost },
+      });
+
+      if (
+        countLikesQuery?.countLikes !== undefined &&
+        countLikesQuery?.countLikes !== null
+      ) {
+        cache.writeQuery({
+          query: COUNT_LIKES,
+          variables: { idPost },
+          data: {
+            countLikes: countLikesQuery.countLikes - 1,
+          },
+        });
+      }
     },
   });
 
@@ -51,9 +92,10 @@ const Actions = ({ idPost }: IActionsProps) => {
     }
   };
 
-  if (loading || error) return null;
+  if (loading || error || loadingCountLikes || errorCountLikes) return null;
 
   const { isLike } = data!;
+  const { countLikes } = dataCountLikes!;
 
   return (
     <div className="actions">
@@ -62,7 +104,7 @@ const Actions = ({ idPost }: IActionsProps) => {
         name={isLike ? "heart" : "heart outline"}
         onClick={isLike ? onDislike : onLike}
       />
-      27 likes
+      {countLikes} {countLikes === 1 ? "like" : "likes"}
     </div>
   );
 };

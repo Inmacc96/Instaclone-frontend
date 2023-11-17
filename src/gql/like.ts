@@ -17,3 +17,11 @@ export const DISLIKE = gql(`#graphql
         dislike(idPost: $idPost)
     }
 `)
+
+export const COUNT_LIKES = gql(`#graphql
+    query countLikes($idPost: ID!){
+        countLikes(idPost: $idPost)
+    }
+`)
+
+
