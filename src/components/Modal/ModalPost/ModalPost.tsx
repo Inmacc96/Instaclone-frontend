@@ -3,6 +3,7 @@ import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 import { Post } from "../../../__generated__/graphql";
 import "./ModalPost.scss";
+import Actions from "./Actions";
 
 interface IModalPostProps {
   show: boolean;
@@ -22,8 +23,8 @@ const ModalPost = ({ show, setShow, post }: IModalPostProps) => {
         />
 
         <Grid.Column className="modal-post__right" width={6}>
-          <Comments idPost={post.id}/>
-          <div>Actions</div>
+          <Comments idPost={post.id} />
+          <Actions idPost={post.id} />
           <CommentForm idPost={post.id} />
         </Grid.Column>
       </Grid>
