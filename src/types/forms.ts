@@ -50,3 +50,13 @@ export type ChangeWebsiteFormTouched = Record<
 export interface ValidateChangeWebsite {
   website: (v: ChangeWebsiteFormData) => string;
 }
+
+export interface AddCommentFormData {
+  comment: string;
+}
+
+export type AddCommentFormTouched = Record<keyof AddCommentFormData, boolean>;
+
+export interface ValidateAddComment {
+  comment: (v: AddCommentFormData) => string;
+}

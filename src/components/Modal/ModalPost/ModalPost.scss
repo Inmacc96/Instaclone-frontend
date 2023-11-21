@@ -1,0 +1,24 @@
+@import "../../../scss/index.scss";
+
+.ui.modal.modal-post {
+  height: 520px;
+
+  .ui.grid {
+    margin: 0;
+    height: 100%;
+  }
+}
+
+.modal-post {
+  &__left {
+    background: {
+      position: center;
+      size: cover;
+      repeat: no-repeat;
+    }
+  }
+
+  .ui.grid > .column.modal-post__right {
+    padding: 0;
+  }
+}
