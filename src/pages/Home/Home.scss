@@ -1,1 +1,8 @@
-@import "../../scss/index.scss"
+@import "../../scss/index.scss";
+
+.ui.grid.home {
+  .column.home__left {
+    padding-top: 0;
+    padding-left: 0;
+  }
+}
