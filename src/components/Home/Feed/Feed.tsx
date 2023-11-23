@@ -1,4 +1,5 @@
 import { Image, Loader } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_FEED } from "../../../gql/post";
 import ImageNotFound from "../../../assets/png/avatar.png";
@@ -14,8 +15,13 @@ const Feed = () => {
   return (
     <div className="feed">
       {getFeed.map((post) => (
-        <div>
-          <p>{post.urlFile}</p>
+        <div key={post.id} className="feed__box">
+          <Link to={`/${post.idUser.username}`}>
+            <div className="feed__box-user">
+              <Image src={post.idUser.avatar ?? ImageNotFound} avatar />
+              <span>{post.idUser.name}</span>
+            </div>
+          </Link>
         </div>
       ))}
     </div>

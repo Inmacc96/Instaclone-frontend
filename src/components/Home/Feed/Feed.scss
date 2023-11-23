@@ -1,1 +1,29 @@
-@import "../../../scss/index.scss"
+@import "../../../scss/index.scss";
+
+.feed {
+  padding-top: 50px;
+  height: calc(100vh - 66px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__box {
+    margin-bottom: 50px;
+    border: 1px solid $border-grey;
+
+    &-user {
+      background-color: $background-light;
+      padding: 15px;
+      color: $font-dark;
+    }
+
+    img.ui.avatar{
+      margin-right: 15px;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
