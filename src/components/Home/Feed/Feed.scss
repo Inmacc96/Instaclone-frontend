@@ -16,14 +16,40 @@
       background-color: $background-light;
       padding: 15px;
       color: $font-dark;
+
+      img.ui.avatar {
+        margin-right: 15px;
+      }
+
+      span {
+        font-weight: bold;
+      }
     }
 
-    img.ui.avatar{
-      margin-right: 15px;
+    &-photo {
+      height: 600px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+      }
     }
 
-    span {
-      font-weight: bold;
+    &-actions {
+      padding: 5px;
+
+      i.icon {
+        margin-right: 10px;
+      }
+    }
+
+    &-form {
+      > form {
+        position: relative !important;
+      }
     }
   }
 }

@@ -2,6 +2,8 @@ import { Image, Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_FEED } from "../../../gql/post";
+import Actions from "../../Modal/ModalPost/Actions";
+import CommentForm from "../../Modal/ModalPost/CommentForm";
 import ImageNotFound from "../../../assets/png/avatar.png";
 import "./Feed.scss";
 
@@ -22,6 +24,16 @@ const Feed = () => {
               <span>{post.idUser.name}</span>
             </div>
           </Link>
+          <div
+            className="feed__box-photo"
+            style={{ backgroundImage: `url("${post.urlFile}")` }}
+          />
+          <div className="feed__box-actions">
+            <Actions idPost={post.id} />
+          </div>
+          <div className="feed__box-form">
+            <CommentForm idPost={post.id} />
+          </div>
         </div>
       ))}
     </div>
