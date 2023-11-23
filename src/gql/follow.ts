@@ -39,3 +39,14 @@ export const GET_FOLLOWINGS = gql(`#graphql
         }
     }
 `);
+
+export const GET_NOTFOLLOWINGS = gql(`#graphql
+    query getNotFollowings {
+        getNotFollowings {
+            id
+            username
+            name
+            avatar
+        }
+    }
+`);

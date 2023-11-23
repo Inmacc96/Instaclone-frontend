@@ -1,6 +1,7 @@
 import { Grid } from "semantic-ui-react";
-import "./Home.scss";
 import Feed from "../../components/Home/Feed";
+import UsersNotFollowings from "../../components/Home/UsersNotFollowings";
+import "./Home.scss";
 
 const Home = () => {
   return (
@@ -9,7 +10,7 @@ const Home = () => {
         <Feed />
       </Grid.Column>
       <Grid.Column className="home__right" width={5}>
-        <h2>Usuario no seguidos</h2>
+        <UsersNotFollowings />
       </Grid.Column>
     </Grid>
   );
