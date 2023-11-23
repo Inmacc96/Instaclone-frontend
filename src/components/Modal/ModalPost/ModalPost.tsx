@@ -1,14 +1,14 @@
 import { Modal, Grid } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
-import { Post } from "../../../__generated__/graphql";
-import "./ModalPost.scss";
 import Actions from "./Actions";
+import { FeedPost, Post } from "../../../__generated__/graphql";
+import "./ModalPost.scss";
 
 interface IModalPostProps {
   show: boolean;
   setShow: (v: boolean) => void;
-  post: Post;
+  post: Post | FeedPost;
 }
 
 const ModalPost = ({ show, setShow, post }: IModalPostProps) => {
