@@ -17,3 +17,19 @@ export const GET_POSTS = gql(`#graphql
         }
     }
 `);
+
+export const GET_FEED =gql(`#graphql
+   query getFeed {
+        getFeed {
+            id
+            idUser {
+                name
+                username
+                avatar
+            }
+            urlFile
+            typeFile
+            createdAt
+        }
+    }
+`)
